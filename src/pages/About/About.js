@@ -2,7 +2,7 @@
 import React from "react";
 import "./Style.scss";
 import { motion } from "framer-motion";
-import { Tooltip } from 'react-tooltip'
+// import { Tooltip } from 'react-tooltip';
 import { Heading } from "../../components";
 import { animations } from "../../styles";
 import {
@@ -37,10 +37,10 @@ export const About = () => {
         <motion.div {...animations.fade} className="skills">
           <h2>Stuff i know : </h2>
           <div className="icons">
-            <a data-tooltip-id="javascript" data-tooltip-content="JavaScript">
+            {/* <a data-tooltip-id="javascript" data-tooltip-content="JavaScript"> */}
               <BiLogoJavascript style={{ color: "yellow" }} />
-            </a>
-            <Tooltip id="javascript" />
+            {/* </a> */}
+            {/* <Tooltip id="javascript" /> */}
             <BiLogoTypescript style={{ color: "#007acc" }} />
             <BiLogoReact style={{ color: "deepskyblue" }} />
             <DiAngularSimple style={{ color: "#dd0031" }} />
