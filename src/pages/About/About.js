@@ -40,7 +40,7 @@ export const About = () => {
           </motion.p>
         </div>
         <motion.div {...animations.fade} className="skills">
-          <h2>Stuff i know : </h2>
+          <h2>Skilled at : </h2>
           <div className="icons">
             <JavaScriptTooltip />
             <TypescriptTooltip />
