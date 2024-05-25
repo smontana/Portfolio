@@ -36,11 +36,11 @@ export const Navbar = () => {
               </NavLink>
             </li>
           ))}
-          <li>
-            <a href="mailto:stephen.a.montana@gmail.com" target="_blank" rel="noreferrer">
+          {/* <li>
+            <a href="mailto:xxx@gmail.com" target="_blank" rel="noreferrer">
               <button>Hire me</button>
             </a>
-          </li>
+          </li> */}
         </ul>
         <div
           className={`hamburger ${isOpen ? "active" : ""}`}
