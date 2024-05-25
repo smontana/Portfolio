@@ -4,3 +4,4 @@ export * from './Heading/Heading';
 export * from './Loader/Loader';
 export * from './Navbar/Navbar';
 export * from './Socials/Socials';
+export * from './TooltipElement';
