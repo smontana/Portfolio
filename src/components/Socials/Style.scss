@@ -1,6 +1,14 @@
+@import '../../styles/index.scss';
+
 .icons {
-    display: flex;
-    gap: 1rem;
-    font-size: 28px;
-    color: red;
+  display: flex;
+  gap: 1rem;
+  font-size: 28px;
+  color: red;
+}
+
+@media screen and (max-width: 700px){
+  .icons {
+    justify-content: center;
   }
+}

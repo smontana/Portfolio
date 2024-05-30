@@ -6,6 +6,7 @@
   justify-content: space-around;
   align-items: center;
   height: 75vh;
+
   .info-section {
     display: flex;
     flex-direction: column;
@@ -40,18 +41,20 @@
 }
 
 @media screen and (max-width: 700px){
-  .home{
+  .home {
     flex-direction: column;
     height: 100vh;
 
-    .info-section{
+    .info-section {
       padding: 2rem;
+
       h1{
         font-size: 35px;
       }
     }
 
-    .image-section{
+    .image-section {
+      height: 40vh;
       order: -1;
     }
   }
