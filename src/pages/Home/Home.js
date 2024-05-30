@@ -12,7 +12,7 @@ export const Home = () => {
         <div className="info-section">
           <motion.h1 {...animations.h1}>
             Hi, I'm <br />
-            Stephen Montana
+            Stephen
           </motion.h1>
           <motion.h3 {...animations.fade}>A Full Stack Developer</motion.h3>
           <motion.p {...animations.fade}>
