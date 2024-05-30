@@ -30,7 +30,7 @@
 
   .image-section {
     border: 2px solid;
-    height: 49vh;
+    // height: 49vh;
 
     img {
       height: 100%;
@@ -43,7 +43,7 @@
 @media screen and (max-width: 700px){
   .home {
     flex-direction: column;
-    height: 100vh;
+    height: 110vh;
 
     .info-section {
       padding: 2rem;
@@ -54,7 +54,7 @@
     }
 
     .image-section {
-      height: 100vh;
+      height: 100%;
       order: -1;
     }
   }
