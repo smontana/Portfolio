@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { FaCode } from "react-icons/fa6"
 import "./Style.scss";
 
 export const Navbar = () => {
@@ -19,7 +20,7 @@ export const Navbar = () => {
     <nav className={`navbar ${isOpen ? "active" : ""}`}>
       <div className="navbar-brand">
         <Link to="/">
-          <h1 style={{ display: 'none' }}>Dev.</h1>
+          <FaCode style={{ color: "#adff30" }} />
         </Link>
       </div>
       <div className="navbar-menu">
