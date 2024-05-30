@@ -10,6 +10,10 @@ export const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
+  const logoClickHandler = () => {
+    if (isOpen) setIsOpen(false);
+  }
+
   const navLinks = [
     { to: "/", text: "Home" },
     { to: "/about", text: "About me" },
@@ -18,7 +22,7 @@ export const Navbar = () => {
 
   return (
     <nav className={`navbar ${isOpen ? "active" : ""}`}>
-      <div className="navbar-brand">
+      <div onClick={logoClickHandler} className="navbar-brand">
         <Link to="/">
           <FaCode style={{ color: "#adff30" }} />
         </Link>
@@ -32,6 +36,7 @@ export const Navbar = () => {
                 className={({ isActive, isPending }) =>
                   isPending ? "pending" : isActive ? "active-link" : ""
                 }
+                onClick={toggleNavbar}
               >
                 {text}
               </NavLink>
