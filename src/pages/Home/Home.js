@@ -1,8 +1,6 @@
 import React from "react";
 import "./Style.scss";
 import { motion } from "framer-motion";
-import myPhoto from "../../assets/images/me.jpg";
-import myPhotoSmaller from "../../assets/images/me-smaller.jpg";
 import { animations } from "../../styles";
 import { Socials } from "../../components";
 
@@ -23,7 +21,7 @@ export const Home = () => {
           <Socials />
         </div>
         <div className="image-section">
-          <img src={myPhotoSmaller} alt="me" />
+          <img src="/assets/images/mesmaller.webp" alt="me" />
         </div>
       </div>
     </>
