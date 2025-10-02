@@ -25,8 +25,8 @@ import { animations } from "../../styles";
 export const About = () => {
   return (
     <>
-      <Heading Heading={"About me"} />
       <div className="about">
+        <Heading Heading={"About me"} />
         <div className="info">
           <motion.p {...animations.fade}>
           As a dedicated, Full Stack Software Developer, I specialize in creating applications that solve problems and delight users.

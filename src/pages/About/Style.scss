@@ -1,6 +1,8 @@
 @import '../../styles/index.scss';
 
 .about {
+    padding: 3rem 7rem;
+
     .info {
         display: flex;
         flex-direction: column;
@@ -29,14 +31,15 @@
     }
 }
 
-@media screen and (max-width: 600px) {
-
+@media screen and (max-width: 784px) {
     .about {
+        padding: 1rem 2rem;
+
         .info {
             padding: 10px;
 
             p {
-                font-size: 13px;
+                font-size: 15px;
             }
         }
 
