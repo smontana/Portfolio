@@ -4,11 +4,12 @@
   display: flex;
   gap: 1rem;
   font-size: 28px;
-  color: red;
+  width: 57%;
+  justify-content: center;
 }
 
 @media screen and (max-width: 700px){
   .icons {
-    justify-content: center;
+    width: 100%;
   }
 }
