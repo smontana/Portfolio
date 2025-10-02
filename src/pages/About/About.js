@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
 import "./Style.scss";
 import { motion } from "framer-motion";
 import {
@@ -7,12 +6,14 @@ import {
   DotNetTooltip,
   ExpressjsTooltip,
   FramerMotionTooltip,
+  GolangTooltip,
   GraphQLTooltip,
   Heading,
   JavaScriptTooltip,
   MongoDBTooltip,
   MySqlTooltip,
   NodejsTooltip,
+  PostgresqlTooltip,
   ReactTooltip,
   SassTooltip,
   SqlServerTooltip,
@@ -50,9 +51,11 @@ export const About = () => {
             <TailwindCSSTooltip />
             <NodejsTooltip />
             <ExpressjsTooltip />
-            <DotNetTooltip />
+            <GolangTooltip />
+            <PostgresqlTooltip />
             <SqlServerTooltip />
             <MySqlTooltip />
+            <DotNetTooltip />
             <MongoDBTooltip />
           </div>
         </motion.div>
