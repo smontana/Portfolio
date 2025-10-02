@@ -18,9 +18,7 @@ root.render(
         <Route path="/work" element={<Work />} />
         {/* <Route path="/contact" element={<Contact />} /> */}
       </Routes>
-      <div className="container">
-        <App />
-      </div>
+      <App />
     </Router>
   </React.StrictMode>
 );
