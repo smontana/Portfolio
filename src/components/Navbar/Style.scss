@@ -2,7 +2,7 @@
 
 .navbar {
   position: sticky;
-  top: 0;
+  top: -1px; /* Slightly offset to avoid overlap issues */
   z-index: 100;
   display: flex;
   justify-content: space-between;
@@ -10,6 +10,7 @@
   background-color: $backgroundColor;
   color: white;
   padding: 1rem;
+  border-bottom: 1px solid #B6FF30;
 
   h1 {
     color: $primaryColor;

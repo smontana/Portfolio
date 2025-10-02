@@ -3,7 +3,8 @@
 .home {
   display: flex;
   width: 100%;
-  justify-content: space-around;
+  padding-inline: 30px;
+  justify-content: space-evenly;
   align-items: center;
   height: 75vh;
 
@@ -29,13 +30,11 @@
   }
 
   .image-section {
-    border: 2px solid;
-    // height: 49vh;
-
     img {
       height: 100%;
       width: 100%;
       object-fit: cover;
+      border-radius: 50%;
     }
   }
 }
@@ -54,7 +53,8 @@
     }
 
     .image-section {
-      height: 100%;
+      padding-top: 1rem;;
+      height: 70%;
       order: -1;
     }
   }
