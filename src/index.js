@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import { Navbar } from './components';
+import { GoogleAnalytics, Navbar } from './components';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { About, Home, Work } from "./pages";
 import "./styles/index.scss";
@@ -11,6 +11,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Router>
+      <GoogleAnalytics />
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
