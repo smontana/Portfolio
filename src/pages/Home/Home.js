@@ -21,7 +21,7 @@ export const Home = () => {
           <Socials />
         </div>
         <div className="image-section">
-          <img src="/assets/images/mesmaller.webp" alt="me" />
+          <img src="/assets/images/me3d.webp" alt="me" />
         </div>
       </div>
     </>
