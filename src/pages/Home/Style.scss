@@ -6,57 +6,221 @@
   padding-inline: 30px;
   justify-content: space-evenly;
   align-items: center;
-  height: 75vh;
+  min-height: 75vh;
+  gap: 2rem; // Add gap for better spacing
 
   .info-section {
     display: flex;
     flex-direction: column;
     gap: 1.3rem;
     flex-basis: 25rem;
+    max-width: 600px; // Limit text width for better readability
 
     h1 {
       font-size: 4rem;
+      font-size: clamp(2.5rem, 8vw, 4rem); // Responsive font sizing
       color: white;
+      line-height: 1.1; // Better line height for large text
+
+      .greeting {
+        display: block;
+        font-size: 0.8em; // Relative to h1 size
+        margin-bottom: 0.2em;
+      }
+
+      .name-container {
+        display: block;
+        margin-top: 0.3em;
+        min-height: 72px;
+        height: clamp(56px, 10vw, 72px); // Responsive height
+        line-height: 1;
+        position: relative; // Helps with layout stability
+        
+        // Make the SVG fill the container properly
+        svg {
+          width: auto;
+          height: 100%;
+          max-width: 100%;
+          display: block;
+          object-fit: contain; // Maintains aspect ratio
+          object-position: left center; // Align to left on desktop
+        }
+      }
     }
 
-    h3 {
+    .subtitle {
       font-weight: 400;
       font-size: 1.3rem;
+      font-size: clamp(1rem, 3vw, 1.3rem); // Responsive font sizing
+      color: rgba(255, 255, 255, 0.95); // Slightly reduced opacity for hierarchy
+      margin: 0; // Reset default h2 margins
     }
 
-    p {
+    .intro-text {
       font-size: 16px;
+      font-size: clamp(0.95rem, 2.5vw, 1.1rem); // Responsive font sizing
+      line-height: 1.6; // Better line height for readability
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 45ch; // Limit line length for readability
+    }
+
+    // Hide line break on screen readers when text naturally wraps
+    @media (max-width: 700px) {
+      .line-break {
+        display: none;
+      }
     }
   }
 
   .image-section {
+    width: 400px;
+    height: 500px;
+    max-width: 100%;
+
     img {
       height: 100%;
       width: 100%;
       object-fit: cover;
       border-radius: 50%;
+      // Add subtle border for better definition
+      border: 3px solid rgba($primaryColor, 0.3);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      
+      // Ensure image doesn't exceed container
+      max-width: 100%;
+      max-height: 100%;
+      
+      // Better performance
+      will-change: transform;
+      
+      // Add subtle hover effect for interactivity feedback
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      
+      &:hover {
+        transform: scale(1.02);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+      }
     }
+  }
+
+  // Ensure all focusable elements have visible focus indicators
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid $primaryColor;
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 }
 
 @media screen and (max-width: 700px){
   .home {
     flex-direction: column;
-    align-items: normal;
+    align-items: center;
+    min-height: auto; // Let content determine height
+    padding-inline: 20px;
+    padding-block: 2rem;
+    gap: 2rem;
 
     .info-section {
-      padding: 2rem;
+      padding: 0;
+      text-align: center; // Center text on mobile
+      align-items: center; // Center child elements
+      max-width: 100%;
 
-      h1{
-        font-size: 35px;
+      h1 {
+        font-size: clamp(2rem, 10vw, 3rem);
+        
+        .greeting {
+          font-size: 0.7em;
+        }
+      }
+
+      .subtitle {
+        font-size: clamp(1rem, 4vw, 1.2rem);
+      }
+      
+      .intro-text {
+        font-size: clamp(0.9rem, 3vw, 1rem);
+        max-width: 100%; // Full width on mobile
       }
     }
 
     .image-section {
-      padding-top: 1rem;;
-      height: 70%;
-      order: -1;
+      width: min(80vw, 400px); // Responsive sizing
+      height: min(80vw, 500px);
+      order: -1; // Image first on mobile
     }
   }
 
+}
+
+// Support for reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .home {
+    .image-section img {
+      transition: none;
+      
+      &:hover {
+        transform: none;
+      }
+    }
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .home {
+    .info-section {
+      h1 {
+        color: white;
+        text-shadow: none;
+      }
+      
+      .subtitle {
+        color: white;
+        opacity: 1;
+      }
+      
+      .intro-text {
+        color: white;
+        opacity: 1;
+      }
+    }
+    
+    .image-section img {
+      border-width: 5px;
+      border-color: $primaryColor;
+    }
+  }
+}
+
+// Ensure text remains readable at 200% zoom
+@media (min-width: 320px) and (max-width: 1024px) {
+  .home {
+    @supports (font-size: clamp(1rem, 2vw, 1.5rem)) {
+      .info-section {
+        h1 {
+          font-size: clamp(2rem, 8vw, 4rem);
+        }
+        
+        .subtitle {
+          font-size: clamp(1rem, 3vw, 1.3rem);
+        }
+        
+        .intro-text {
+          font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+        }
+      }
+    }
+  }
+}
+
+// Disable animations for users who prefer reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .motion-safe {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
