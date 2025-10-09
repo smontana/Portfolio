@@ -26,7 +26,7 @@ import { animations } from "../../styles";
 export const About = () => {
   return (
     <>
-      <div className="about">
+      <main id="main-content" className="about">
         <Heading Heading={"About me"} />
         <div className="info">
           <motion.p {...animations.fade}>
@@ -59,7 +59,7 @@ export const About = () => {
             <MongoDBTooltip />
           </div>
         </motion.div>
-      </div>
+      </main>
     </>
   );
 };
