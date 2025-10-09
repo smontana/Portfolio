@@ -12,17 +12,21 @@ export const StephenSVG = () => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     const lines = ref.current.querySelectorAll('.line')
-    const drawable = svg.createDrawable(lines)
 
     // If user prefers reduced motion, show static state
     if (prefersReducedMotion) {
-      animate(drawable, {
-        draw: '1 1',
-        duration: 0,
-        autoplay: false
+      // Make sure all paths are fully visible
+      lines.forEach(line => {
+        line.style.strokeDasharray = 'none'
+        line.style.strokeDashoffset = '0'
+        line.style.opacity = '1'
+        line.style.fillOpacity = '0' // Keep fill transparent for outline effect
       })
       return
     }
+
+    // Create the animated drawable for users who want animation
+    const drawable = svg.createDrawable(lines)
 
     // Create the animation - plays only 3 times then stops
     animate(drawable, {
