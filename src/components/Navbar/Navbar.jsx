@@ -1,18 +1,54 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { FaCode } from "react-icons/fa6"
+import { FaCode } from "react-icons/fa6";
 import "./Style.scss";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const menuId = "primary-menu";
+  const btnRef = useRef(null);
+  const firstMenuItemRef = useRef(null);
+
+  // Close on Escape and manage focus
+  useEffect(() => {
+    function onKeydown(e) {
+      if (e.key === "Escape" && isOpen) {
+        setIsOpen(false);
+        // Return focus to hamburger button
+        if (btnRef.current) {
+          btnRef.current.focus();
+        }
+      }
+    }
+    document.addEventListener("keydown", onKeydown);
+    return () => document.removeEventListener("keydown", onKeydown);
+  }, [isOpen]);
+
+  // Trap focus within mobile menu when open
+  useEffect(() => {
+    if (isOpen && window.innerWidth <= 768) {
+      // Focus first menu item when menu opens
+      setTimeout(() => {
+        if (firstMenuItemRef.current) {
+          firstMenuItemRef.current.focus();
+        }
+      }, 100);
+    }
+  }, [isOpen]);
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
 
   const clickHandler = () => {
-    if (isOpen) setIsOpen(false);
-  }
+    if (isOpen) {
+      setIsOpen(false);
+      // Return focus to hamburger button after closing via link click
+      if (window.innerWidth <= 768 && btnRef.current) {
+        btnRef.current.focus();
+      }
+    }
+  };
 
   const navLinks = [
     { to: "/", text: "Home" },
@@ -21,42 +57,81 @@ export const Navbar = () => {
   ];
 
   return (
-    <nav className={`navbar ${isOpen ? "active" : ""}`}>
-      <div onClick={clickHandler} className="navbar-brand">
-        <Link to="/">
-          <FaCode style={{ color: "#adff30" }} />
-        </Link>
-      </div>
-      <div className="navbar-menu">
-        <ul className={`menu ${isOpen ? "active" : ""}`}>
-          {navLinks.map(({ to, text }) => (
-            <li key={to}>
-              <NavLink
-                to={to}
-                className={({ isActive, isPending }) =>
-                  isPending ? "pending" : isActive ? "active-link" : ""
-                }
-                onClick={clickHandler}
-              >
-                {text}
-              </NavLink>
-            </li>
-          ))}
-          {/* <li>
-            <a href="mailto:xxx@gmail.com" target="_blank" rel="noreferrer">
-              <button>Hire me</button>
-            </a>
-          </li> */}
-        </ul>
-        <div
-          className={`hamburger ${isOpen ? "active" : ""}`}
-          onClick={toggleNavbar}
-        >
-          <div className="bar"></div>
-          <div className="bar"></div>
-          <div className="bar"></div>
+    <>
+      {/* Skip to main content link for keyboard navigation */}
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+      
+      <nav 
+        className={`navbar ${isOpen ? "active" : ""}`}
+        aria-label="Main navigation"
+      >
+        <div className="navbar-brand">
+          <Link 
+            to="/"
+            onClick={clickHandler}
+            aria-label="Home - Company Logo"
+          >
+            <FaCode 
+              style={{ color: "#adff30" }} 
+              aria-hidden="true"
+            />
+          </Link>
         </div>
-      </div>
-    </nav>
+        
+        <div className="navbar-menu">
+          <ul 
+            id={menuId}
+            className={`menu ${isOpen ? "active" : ""}`}
+          >
+            {navLinks.map(({ to, text }, index) => (
+              <li key={to}>
+                <NavLink
+                  ref={index === 0 ? firstMenuItemRef : null}
+                  to={to}
+                  className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "active-link" : ""
+                  }
+                  onClick={clickHandler}
+                  aria-current={
+                    window.location.pathname === to ? "page" : undefined
+                  }
+                >
+                  {text}
+                </NavLink>
+              </li>
+            ))}
+            {/* Uncommented and made accessible:
+            <li role="listitem">
+              <a 
+                href="mailto:xxx@gmail.com" 
+                target="_blank" 
+                rel="noreferrer"
+                aria-label="Send email to hire me - opens in new window"
+              >
+                <button type="button">
+                  Hire me
+                </button>
+              </a>
+            </li> */}
+          </ul>
+          
+          <button
+            ref={btnRef}
+            type="button"
+            className={`hamburger ${isOpen ? "active" : ""}`}
+            onClick={toggleNavbar}
+            aria-expanded={isOpen}
+            aria-controls={menuId}
+            aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+          >
+            <span className="bar" aria-hidden="true"></span>
+            <span className="bar" aria-hidden="true"></span>
+            <span className="bar" aria-hidden="true"></span>
+          </button>
+        </div>
+      </nav>
+    </>
   );
 };
