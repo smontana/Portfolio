@@ -12,9 +12,8 @@ import {
   useInteractions,
   FloatingPortal
 } from "@floating-ui/react";
-import { BiLogoMongodb } from "react-icons/bi";
 
-export function MongoDBTooltip() {
+export function SkillTooltip({ Icon, color, label }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const { refs, floatingStyles, context } = useFloating({
@@ -50,7 +49,7 @@ export function MongoDBTooltip() {
   return (
     <>
       <div ref={refs.setReference} {...getReferenceProps()}>
-        <BiLogoMongodb style={{ color: "green" }} />
+        <Icon style={{ color }} />
       </div>
       <FloatingPortal>
         {isOpen && (
@@ -60,7 +59,7 @@ export function MongoDBTooltip() {
             style={floatingStyles}
             {...getFloatingProps()}
           >
-            MongoDB
+            {label}
           </div>
         )}
       </FloatingPortal>
