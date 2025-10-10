@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import { GoogleAnalytics, Navbar } from './components';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import "./styles/index.scss";
-import 'react-tooltip/dist/react-tooltip.css'
 
 // Lazy load page components for code splitting
 const Home = lazy(() => import('./pages/Home/Home'));
