@@ -9,12 +9,10 @@ export const Home = () => {
       <main id="main-content" className="home" role="main">
         <div className="info-section">
           <motion.h1 {...animations.h1} className="motion-safe">
-            <h1>
               <span className="greeting">Hi, I'm</span>
               <span className="name-container" aria-label="Stephen">
                 <StephenSVG />
               </span>
-            </h1>
           </motion.h1>
           <motion.h2 {...animations.fade} className="subtitle motion-safe">
             A Full Stack Developer
