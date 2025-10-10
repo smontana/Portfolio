@@ -2,8 +2,37 @@ import "./Style.scss";
 import { motion } from "framer-motion";
 import { animations } from "../../styles";
 import { Socials, StephenSVG } from "../../components";
+import { useState, useEffect } from "react";
 
 export const Home = () => {
+  const [showMatrix, setShowMatrix] = useState(false);
+
+  useEffect(() => {
+    // Create global console commands for all variations
+    const activateMatrix = () => {
+      setShowMatrix(true);
+      console.log("Welcome to the Matrix...");
+      return "You have chosen the red pill. There is no turning back.";
+    };
+
+    window.redpill = activateMatrix;
+    window['red-pill'] = activateMatrix;
+    window.red_pill = activateMatrix;
+    window['red pill'] = activateMatrix;
+    window.red = activateMatrix;
+    window.r = activateMatrix;
+
+    // Cleanup function
+    return () => {
+      delete window.redpill;
+      delete window['red-pill'];
+      delete window.red_pill;
+      delete window['red pill'];
+      delete window.red;
+      delete window.r;
+    };
+  }, []);
+
   return (
     <>
       <main id="main-content" className="home" role="main">
@@ -28,8 +57,8 @@ export const Home = () => {
         </div>
         <div className="image-section">
           <img
-            src="/assets/images/me3d.webp"
-            alt="Stephen Montana - 3D rendered portrait of a full stack developer"
+            src={showMatrix ? "/assets/images/matrix.webp" : "/assets/images/me3d.webp"}
+            alt={showMatrix ? "Stephen Montana - 3D rendered portrait of a full stack developer in the matrix." : "Stephen Montana - 3D rendered portrait of a full stack developer"}
             loading="lazy"
             width="400"
             height="400"
