@@ -7,6 +7,11 @@ import { About, Home, Work } from "./pages";
 import "./styles/index.scss";
 import 'react-tooltip/dist/react-tooltip.css'
 
+console.log(`You take the blue pill—the story ends, 
+  you wake up in your bed and believe whatever you want to believe.
+  You take the red pill—you stay in Wonderland, and I show you how deep the rabbit hole goes.
+`);
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
