@@ -6,15 +6,17 @@ import { useState, useEffect } from "react";
 
 export const Home = () => {
   const [showMatrix, setShowMatrix] = useState(false);
+  const [tapCount, setTapCount] = useState(0);
+  const [longPressTimer, setLongPressTimer] = useState(null);
+
+  const activateMatrix = () => {
+    setShowMatrix(true);
+    console.log("Welcome to the Matrix...");
+    return "You have chosen the red pill. There is no turning back.";
+  };
 
   useEffect(() => {
     // Create global console commands for all variations
-    const activateMatrix = () => {
-      setShowMatrix(true);
-      console.log("Welcome to the Matrix...");
-      return "You have chosen the red pill. There is no turning back.";
-    };
-
     window.redpill = activateMatrix;
     window['red-pill'] = activateMatrix;
     window.red_pill = activateMatrix;
@@ -32,6 +34,43 @@ export const Home = () => {
       delete window.r;
     };
   }, []);
+
+  // Reset tap count after 1 second of inactivity
+  useEffect(() => {
+    if (tapCount > 0 && tapCount < 5) {
+      const timer = setTimeout(() => setTapCount(0), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [tapCount]);
+
+  const handleImageClick = () => {
+    if (showMatrix) return; // Already activated
+
+    const newCount = tapCount + 1;
+    setTapCount(newCount);
+
+    if (newCount >= 5) {
+      activateMatrix();
+      setTapCount(0);
+    }
+  };
+
+  const handleTouchStart = () => {
+    if (showMatrix) return; // Already activated
+
+    const timer = setTimeout(() => {
+      activateMatrix();
+    }, 2500);
+
+    setLongPressTimer(timer);
+  };
+
+  const handleTouchEnd = () => {
+    if (longPressTimer) {
+      clearTimeout(longPressTimer);
+      setLongPressTimer(null);
+    }
+  };
 
   return (
     <>
@@ -62,6 +101,11 @@ export const Home = () => {
             loading="lazy"
             width="400"
             height="400"
+            onClick={handleImageClick}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            onTouchCancel={handleTouchEnd}
+            style={{ cursor: showMatrix ? 'default' : 'pointer', userSelect: 'none' }}
           />
         </div>
       </main>
