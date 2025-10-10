@@ -36,7 +36,16 @@ export const StephenSVG = () => {
       delay: stagger(100),
       alternate: true,
       reversed: true,
-      loop: 2
+      loop: 2,
+      onComplete: () => {
+        // After animation finishes, show static state
+        lines.forEach(line => {
+          line.style.strokeDasharray = 'none'
+          line.style.strokeDashoffset = '0'
+          line.style.opacity = '1'
+          line.style.fillOpacity = '0'
+        })
+      }
     })
   }, [])
 
