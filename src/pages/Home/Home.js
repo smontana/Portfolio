@@ -8,9 +8,11 @@ export const Home = () => {
   const [showMatrix, setShowMatrix] = useState(false);
   const [tapCount, setTapCount] = useState(0);
   const [longPressTimer, setLongPressTimer] = useState(null);
+  const [glitchLevel, setGlitchLevel] = useState(0); // 0: none, 1: subtle, 2: intense, 3: matrix
 
   const activateMatrix = () => {
     setShowMatrix(true);
+    setGlitchLevel(3);
     console.log("Welcome to the Matrix...");
     return "You have chosen the red pill. There is no turning back.";
   };
@@ -43,6 +45,34 @@ export const Home = () => {
     }
   }, [tapCount]);
 
+  // Time-based glitch escalation
+  useEffect(() => {
+    if (showMatrix) return; // Don't run if already activated
+
+    // 3 seconds: subtle glitch
+    const subtleTimer = setTimeout(() => {
+      setGlitchLevel(1);
+      setTimeout(() => setGlitchLevel(0), 300); // Glitch for 300ms
+    }, 3000);
+
+    // 6 seconds: intense glitch
+    const intenseTimer = setTimeout(() => {
+      setGlitchLevel(2);
+      setTimeout(() => setGlitchLevel(0), 600); // Glitch for 600ms
+    }, 6000);
+
+    // 12 seconds: full matrix transformation
+    const matrixTimer = setTimeout(() => {
+      activateMatrix();
+    }, 12000);
+
+    return () => {
+      clearTimeout(subtleTimer);
+      clearTimeout(intenseTimer);
+      clearTimeout(matrixTimer);
+    };
+  }, [showMatrix]);
+
   const handleImageClick = () => {
     if (showMatrix) return; // Already activated
 
@@ -72,9 +102,19 @@ export const Home = () => {
     }
   };
 
+  const getGlitchClass = () => {
+    if (glitchLevel === 1) return 'glitch-subtle';
+    if (glitchLevel === 2) return 'glitch-intense';
+    return '';
+  };
+
   return (
     <>
-      <main id="main-content" className="home" role="main">
+      <main
+        id="main-content"
+        className={`home ${showMatrix ? 'matrix-mode' : ''}`}
+        role="main"
+      >
         <div className="info-section">
           <motion.h1 {...animations.h1} className="motion-safe">
               <span className="greeting">Hi, I'm</span>
@@ -96,6 +136,7 @@ export const Home = () => {
         </div>
         <div className="image-section">
           <img
+            className={getGlitchClass()}
             src={showMatrix ? "/assets/images/matrix.webp" : "/assets/images/me3d.webp"}
             alt={showMatrix ? "Stephen Montana - 3D rendered portrait of a full stack developer in the matrix." : "Stephen Montana - 3D rendered portrait of a full stack developer"}
             loading="lazy"
