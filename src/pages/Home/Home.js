@@ -9,12 +9,23 @@ export const Home = () => {
   const [tapCount, setTapCount] = useState(0);
   const [longPressTimer, setLongPressTimer] = useState(null);
   const [glitchLevel, setGlitchLevel] = useState(0); // 0: none, 1: subtle, 2: intense, 3: matrix
+  const [showToggle, setShowToggle] = useState(false);
 
   const activateMatrix = () => {
     setShowMatrix(true);
     setGlitchLevel(3);
     console.log("Welcome to the Matrix...");
+
+    // Show toggle 1 second after matrix activation
+    setTimeout(() => {
+      setShowToggle(true);
+    }, 1000);
+
     return "You have chosen the red pill. There is no turning back.";
+  };
+
+  const toggleReality = () => {
+    setShowMatrix(!showMatrix);
   };
 
   useEffect(() => {
@@ -149,6 +160,23 @@ export const Home = () => {
             style={{ cursor: showMatrix ? 'default' : 'pointer', userSelect: 'none' }}
           />
         </div>
+
+        {/* Reality Mode Toggle */}
+        {showToggle && (
+          <button
+            className="reality-toggle"
+            onClick={toggleReality}
+            aria-label={showMatrix ? "Exit Matrix mode" : "Enter Matrix mode"}
+            title={showMatrix ? "Return to reality" : "Enter the Matrix"}
+          >
+            <span className="pill-icon">
+              <span className={`pill ${showMatrix ? 'blue' : 'red'}`}></span>
+            </span>
+            <span className="toggle-label">
+              {showMatrix ? 'Reality Mode' : 'Matrix Mode'}
+            </span>
+          </button>
+        )}
       </main>
     </>
   );

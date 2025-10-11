@@ -392,3 +392,117 @@
     text-shadow: 0 0 20px rgba(0, 255, 70, 0.8);
   }
 }
+
+// Reality Mode Toggle Button
+.reality-toggle {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  animation: toggle-slide-in 0.5s ease-out;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  .pill-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pill {
+    width: 24px;
+    height: 12px;
+    border-radius: 12px;
+    position: relative;
+    transition: all 0.3s ease;
+
+    &.red {
+      background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+      animation: pill-glow-red 2s ease-in-out infinite alternate;
+    }
+
+    &.blue {
+      background: linear-gradient(135deg, #0066ff 0%, #0044cc 100%);
+      box-shadow: 0 0 10px rgba(0, 102, 255, 0.5);
+      animation: pill-glow-blue 2s ease-in-out infinite alternate;
+    }
+  }
+
+  .toggle-label {
+    user-select: none;
+  }
+
+  // Focus visible for accessibility
+  &:focus-visible {
+    outline: 2px solid $primaryColor;
+    outline-offset: 2px;
+  }
+}
+
+@keyframes toggle-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pill-glow-red {
+  from {
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+  }
+  to {
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+  }
+}
+
+@keyframes pill-glow-blue {
+  from {
+    box-shadow: 0 0 10px rgba(0, 102, 255, 0.5);
+  }
+  to {
+    box-shadow: 0 0 20px rgba(0, 102, 255, 0.8);
+  }
+}
+
+// Mobile adjustments
+@media screen and (max-width: 700px) {
+  .reality-toggle {
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+    gap: 0.5rem;
+
+    .pill {
+      width: 20px;
+      height: 10px;
+    }
+  }
+}
