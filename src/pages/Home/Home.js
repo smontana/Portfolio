@@ -9,6 +9,7 @@ export const Home = () => {
   const [longPressTimer, setLongPressTimer] = useState(null);
   const [glitchLevel, setGlitchLevel] = useState(0); // 0: none, 1: subtle, 2: intense, 3: matrix
   const [showToggle, setShowToggle] = useState(false);
+  const [easterEggReady, setEasterEggReady] = useState(false);
 
   const activateMatrix = () => {
     setShowMatrix(true);
@@ -27,41 +28,59 @@ export const Home = () => {
     setShowMatrix(!showMatrix);
   };
 
+  // Defer ALL Matrix easter egg logic until after initial paint
   useEffect(() => {
-    // Defer setup of console commands until after initial render
-    const timer = setTimeout(() => {
-      // Create global console commands for all variations
+    // Use requestIdleCallback or setTimeout to defer until browser is idle
+    const initEasterEgg = () => {
+      setEasterEggReady(true);
+
+      // Setup console commands
       window.redpill = activateMatrix;
       window['red-pill'] = activateMatrix;
       window.red_pill = activateMatrix;
       window['red pill'] = activateMatrix;
       window.red = activateMatrix;
       window.r = activateMatrix;
-    }, 100);
-
-    // Cleanup function
-    return () => {
-      clearTimeout(timer);
-      delete window.redpill;
-      delete window['red-pill'];
-      delete window.red_pill;
-      delete window['red pill'];
-      delete window.red;
-      delete window.r;
     };
+
+    // Try to use requestIdleCallback for better performance, fallback to setTimeout
+    if ('requestIdleCallback' in window) {
+      const idleCallback = requestIdleCallback(initEasterEgg, { timeout: 2000 });
+      return () => {
+        cancelIdleCallback(idleCallback);
+        delete window.redpill;
+        delete window['red-pill'];
+        delete window.red_pill;
+        delete window['red pill'];
+        delete window.red;
+        delete window.r;
+      };
+    } else {
+      const timer = setTimeout(initEasterEgg, 1000);
+      return () => {
+        clearTimeout(timer);
+        delete window.redpill;
+        delete window['red-pill'];
+        delete window.red_pill;
+        delete window['red pill'];
+        delete window.red;
+        delete window.r;
+      };
+    }
   }, []);
 
-  // Reset tap count after 1 second of inactivity
+  // Reset tap count after 1 second of inactivity (only if easter egg is ready)
   useEffect(() => {
+    if (!easterEggReady) return;
     if (tapCount > 0 && tapCount < 5) {
       const timer = setTimeout(() => setTapCount(0), 1000);
       return () => clearTimeout(timer);
     }
-  }, [tapCount]);
+  }, [tapCount, easterEggReady]);
 
-  // Time-based glitch escalation
+  // Time-based glitch escalation (only start after easter egg is ready)
   useEffect(() => {
-    if (showMatrix) return; // Don't run if already activated
+    if (!easterEggReady || showMatrix) return; // Don't run if not ready or already activated
 
     // 3 seconds: subtle glitch
     const subtleTimer = setTimeout(() => {
@@ -85,10 +104,10 @@ export const Home = () => {
       clearTimeout(intenseTimer);
       clearTimeout(matrixTimer);
     };
-  }, [showMatrix]);
+  }, [easterEggReady, showMatrix]);
 
   const handleImageClick = () => {
-    if (showMatrix) return; // Already activated
+    if (!easterEggReady || showMatrix) return; // Only work if ready and not already activated
 
     const newCount = tapCount + 1;
     setTapCount(newCount);
@@ -100,7 +119,7 @@ export const Home = () => {
   };
 
   const handleTouchStart = () => {
-    if (showMatrix) return; // Already activated
+    if (!easterEggReady || showMatrix) return; // Only work if ready and not already activated
 
     const timer = setTimeout(() => {
       activateMatrix();
