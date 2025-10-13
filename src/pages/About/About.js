@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import "./Style.scss";
-import { motion } from "framer-motion";
-import { Heading, SkillTooltip } from "../../components";
+import { Heading, SkillTooltip, LazyMotion, m, domAnimation } from "../../components";
 import { animations } from "../../styles";
 import {
   BiLogoJavascript,
@@ -22,19 +21,20 @@ import { TbBrandFramerMotion } from "react-icons/tb";
 export const About = () => {
   return (
     <>
-      <main id="main-content" className="about">
-        <Heading Heading={"About me"} />
-        <div className="info">
-          <motion.p {...animations.fade}>
-          As a dedicated, Full Stack Software Developer, I specialize in creating applications that solve problems and delight users.
-          With over 10 years of development experience, I thrive at solving problems through the creation of thoughtful solutions.
-          My journey has been marked by a commitment to fostering a culture of innovation, collaboration, and continuous learning.
-          Whether it's shaping scalable architectures, implementing cutting-edge technologies, or optimizing performance for exceptional user experiences,
-          I'm driven by a relentless pursuit of excellence.
-          I work to bridge the gap between business objectives and technical execution, translating visions into tangible outcomes that exceed expectations.
-          </motion.p>
-        </div>
-        <motion.div {...animations.fade} className="skills">
+      <LazyMotion features={domAnimation} strict>
+        <main id="main-content" className="about">
+          <Heading Heading={"About me"} />
+          <div className="info">
+            <m.p {...animations.fade}>
+            As a dedicated, Full Stack Software Developer, I specialize in creating applications that solve problems and delight users.
+            With over 10 years of development experience, I thrive at solving problems through the creation of thoughtful solutions.
+            My journey has been marked by a commitment to fostering a culture of innovation, collaboration, and continuous learning.
+            Whether it's shaping scalable architectures, implementing cutting-edge technologies, or optimizing performance for exceptional user experiences,
+            I'm driven by a relentless pursuit of excellence.
+            I work to bridge the gap between business objectives and technical execution, translating visions into tangible outcomes that exceed expectations.
+            </m.p>
+          </div>
+          <m.div {...animations.fade} className="skills">
           <h2>Skilled at : </h2>
           <div className="icons">
             <SkillTooltip Icon={BiLogoJavascript} color="yellow" label="JavaScript" />
@@ -54,8 +54,9 @@ export const About = () => {
             <SkillTooltip Icon={DiDotnet} color="blueviolet" label=".NET" />
             <SkillTooltip Icon={BiLogoMongodb} color="green" label="MongoDB" />
           </div>
-        </motion.div>
-      </main>
+        </m.div>
+        </main>
+      </LazyMotion>
     </>
   );
 };

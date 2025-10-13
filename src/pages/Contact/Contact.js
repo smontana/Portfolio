@@ -1,16 +1,15 @@
-import React from "react";
 import "./Style.scss";
-import { motion } from "framer-motion";
 import { BiSolidMessage, BiSolidPhone } from "react-icons/bi";
 import { HiLocationMarker } from "react-icons/hi";
-import { Form, Heading, Socials } from "../../components";
+import { Form, Heading, Socials, LazyMotion, m, domAnimation } from "../../components";
 import { animations } from "../../styles";
 
 export const Contact = () => {
   return (
     <>
-      <Heading Heading={"Contact me"} />
-      <motion.div {...animations.fade} className="contact-section">
+      <LazyMotion features={domAnimation} strict>
+        <Heading Heading={"Contact me"} />
+        <m.div {...animations.fade} className="contact-section">
         <div className="form">
           <Form />
           <div className="details">
@@ -35,7 +34,8 @@ export const Contact = () => {
             </div>
           </div>
         </div>
-      </motion.div>
+        </m.div>
+      </LazyMotion>
     </>
   );
 };

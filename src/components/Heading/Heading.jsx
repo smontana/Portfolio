@@ -1,6 +1,5 @@
-import React from "react";
 import "./Style.scss";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { animations } from "../../styles";
 
 export const Heading = ({Heading}) => {
@@ -8,7 +7,7 @@ export const Heading = ({Heading}) => {
     <div className="heading">
       <div className="bars">
         <span></span>
-        <motion.span {...animations.bar}></motion.span>
+        <m.span {...animations.bar}></m.span>
       </div>
       <h1>{Heading}</h1>
     </div>

@@ -2,6 +2,7 @@ export * from './Card/Card';
 export * from './Form/Form';
 export * from './GoogleAnalytics/GoogleAnalytics';
 export * from './Heading/Heading';
+export * from './LazyMotion/LazyMotion';
 export * from './Loader/Loader';
 export * from './Navbar/Navbar';
 export * from './Socials/Socials';

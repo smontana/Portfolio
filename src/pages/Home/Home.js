@@ -1,7 +1,6 @@
 import "./Style.scss";
-import { motion } from "framer-motion";
 import { animations } from "../../styles";
-import { Socials, StephenSVG } from "../../components";
+import { Socials, StephenSVG, LazyMotion, m, domAnimation } from "../../components";
 import { useState, useEffect } from "react";
 
 export const Home = () => {
@@ -29,16 +28,20 @@ export const Home = () => {
   };
 
   useEffect(() => {
-    // Create global console commands for all variations
-    window.redpill = activateMatrix;
-    window['red-pill'] = activateMatrix;
-    window.red_pill = activateMatrix;
-    window['red pill'] = activateMatrix;
-    window.red = activateMatrix;
-    window.r = activateMatrix;
+    // Defer setup of console commands until after initial render
+    const timer = setTimeout(() => {
+      // Create global console commands for all variations
+      window.redpill = activateMatrix;
+      window['red-pill'] = activateMatrix;
+      window.red_pill = activateMatrix;
+      window['red pill'] = activateMatrix;
+      window.red = activateMatrix;
+      window.r = activateMatrix;
+    }, 100);
 
     // Cleanup function
     return () => {
+      clearTimeout(timer);
       delete window.redpill;
       delete window['red-pill'];
       delete window.red_pill;
@@ -121,63 +124,66 @@ export const Home = () => {
 
   return (
     <>
-      <main
-        id="main-content"
-        className={`home ${showMatrix ? 'matrix-mode' : ''}`}
-        role="main"
-      >
-        <div className="info-section">
-          <motion.h1 {...animations.h1} className="motion-safe">
-              <span className="greeting">Hi, I'm</span>
-              <span className="name-container" aria-label="Stephen">
-                <StephenSVG />
-              </span>
-          </motion.h1>
-          <motion.h2 {...animations.fade} className="subtitle motion-safe">
-            A Full Stack Developer
-          </motion.h2>
-          <motion.p {...animations.fade} className="intro-text motion-safe">
-            If you're working on something cool,{' '}
-            <span className="line-break" aria-hidden="true"><br /></span>
-            reach out and let's collaborate!
-          </motion.p>
-          <div aria-label="Connect with me on social media">
-            <Socials />
+      <LazyMotion features={domAnimation} strict>
+        <main
+          id="main-content"
+          className={`home ${showMatrix ? 'matrix-mode' : ''}`}
+          role="main"
+        >
+          <div className="info-section">
+            <m.h1 {...animations.h1} className="motion-safe">
+                <span className="greeting">Hi, I'm</span>
+                <span className="name-container" aria-label="Stephen">
+                  <StephenSVG />
+                </span>
+            </m.h1>
+            <m.h2 {...animations.fade} className="subtitle motion-safe">
+              A Full Stack Developer
+            </m.h2>
+            <m.p {...animations.fade} className="intro-text motion-safe">
+              If you're working on something cool,{' '}
+              <span className="line-break" aria-hidden="true"><br /></span>
+              reach out and let's collaborate!
+            </m.p>
+            <div aria-label="Connect with me on social media">
+              <Socials />
+            </div>
           </div>
-        </div>
-        <div className="image-section">
-          <img
-            className={getGlitchClass()}
-            src={showMatrix ? "/assets/images/matrix.webp" : "/assets/images/me3d.webp"}
-            alt={showMatrix ? "Stephen Montana - 3D rendered portrait of a full stack developer in the matrix." : "Stephen Montana - 3D rendered portrait of a full stack developer"}
-            loading="lazy"
-            width="400"
-            height="400"
-            onClick={handleImageClick}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-            onTouchCancel={handleTouchEnd}
-            style={{ cursor: showMatrix ? 'default' : 'pointer', userSelect: 'none' }}
-          />
-        </div>
 
-        {/* Reality Mode Toggle */}
-        {showToggle && (
-          <button
-            className="reality-toggle"
-            onClick={toggleReality}
-            aria-label={showMatrix ? "Exit Matrix mode" : "Enter Matrix mode"}
-            title={showMatrix ? "Return to reality" : "Enter the Matrix"}
-          >
-            <span className="pill-icon">
-              <span className={`pill ${showMatrix ? 'blue' : 'red'}`}></span>
-            </span>
-            <span className="toggle-label">
-              {showMatrix ? 'Reality Mode' : 'Matrix Mode'}
-            </span>
-          </button>
-        )}
-      </main>
+          <div className="image-section">
+            <img
+              className={getGlitchClass()}
+              src={showMatrix ? "/assets/images/matrix.webp" : "/assets/images/me3d.webp"}
+              alt={showMatrix ? "Stephen Montana - 3D rendered portrait of a full stack developer in the matrix." : "Stephen Montana - 3D rendered portrait of a full stack developer"}
+              fetchpriority="high"
+              width="400"
+              height="400"
+              onClick={handleImageClick}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+              onTouchCancel={handleTouchEnd}
+              style={{ cursor: showMatrix ? 'default' : 'pointer', userSelect: 'none' }}
+            />
+          </div>
+
+          {/* Reality Mode Toggle */}
+          {showToggle && (
+            <button
+              className="reality-toggle"
+              onClick={toggleReality}
+              aria-label={showMatrix ? "Exit Matrix mode" : "Enter Matrix mode"}
+              title={showMatrix ? "Return to reality" : "Enter the Matrix"}
+            >
+              <span className="pill-icon">
+                <span className={`pill ${showMatrix ? 'blue' : 'red'}`}></span>
+              </span>
+              <span className="toggle-label">
+                {showMatrix ? 'Reality Mode' : 'Matrix Mode'}
+              </span>
+            </button>
+          )}
+        </main>
+      </LazyMotion>
     </>
   );
 };

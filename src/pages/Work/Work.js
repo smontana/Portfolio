@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./Style.scss";
-import { motion } from "framer-motion";
 import Data from "../../assets/Data.json";
-import { Card, Heading, LoadMore } from "../../components";
+import { Card, Heading, LoadMore, LazyMotion, m, domAnimation } from "../../components";
 import {
   BiLogoJavascript,
   BiLogoMongodb,
@@ -34,9 +33,10 @@ export const Work = () => {
   };
 
   return (
-    <div className="work">
-      <Heading Heading={"my work"} />
-      <motion.div
+    <LazyMotion features={domAnimation} strict>
+      <div className="work">
+        <Heading Heading={"my work"} />
+        <m.div
         className="icons"
         {...animations.bar}
         style={{
@@ -86,7 +86,7 @@ export const Work = () => {
           style={{ color: "#e535ab ", cursor: "pointer" }}
           onClick={() => filterProjectsBySkill("graphql")}
         />
-      </motion.div>
+      </m.div>
       <div className="cards">
         {projects.map((value) => (
           <Card
@@ -106,7 +106,8 @@ export const Work = () => {
           />
         )}
       </div>
-    </div>
+      </div>
+    </LazyMotion>
   );
 };
 
