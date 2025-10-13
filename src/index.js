@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { Analytics } from '@vercel/analytics/react';
-import { GoogleAnalytics, Navbar } from './components';
+import { Navbar } from './components';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import "./styles/index.scss";
 
@@ -23,7 +23,6 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Router>
-      <GoogleAnalytics />
       <Analytics />
       <Navbar />
       <Suspense fallback={
