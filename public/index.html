@@ -16,9 +16,22 @@
   <link rel="icon" href="" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
-  <meta name="description" content="Web site created using create-react-app" />
+  <meta name="description" content="Stephen Montana - Full Stack Developer specializing in React, Node.js, and modern web technologies. Building innovative solutions and delightful user experiences." />
   <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.webp" />
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+  <!-- Security Headers -->
+  <!-- Content Security Policy: Controls which resources can be loaded -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://www.google-analytics.com https://analytics.google.com; frame-ancestors 'none';" />
+
+  <!-- Prevent MIME type sniffing -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+
+  <!-- Control information sent in Referer header -->
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <!-- Permissions Policy: Control browser features -->
+  <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()" />
 
   <!-- Preload critical image -->
   <link rel="preload" as="image" fetchpriority="high" href="%PUBLIC_URL%/assets/images/me3d.webp" type="image/webp" />
