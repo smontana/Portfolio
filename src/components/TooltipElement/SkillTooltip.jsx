@@ -12,6 +12,7 @@ import {
   useInteractions,
   FloatingPortal
 } from "@floating-ui/react";
+import "./Style.scss";
 
 export function SkillTooltip({ Icon, color, label }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,7 +55,7 @@ export function SkillTooltip({ Icon, color, label }) {
       <FloatingPortal>
         {isOpen && (
           <div
-            className="Tooltip w-max py-1 px-2 bg-[#444] text-white text-[90%] rounded"
+            className="Tooltip"
             ref={refs.setFloating}
             style={floatingStyles}
             {...getFloatingProps()}

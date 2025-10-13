@@ -129,9 +129,16 @@
 
       h1 {
         font-size: clamp(2rem, 10vw, 3rem);
-        
+
         .greeting {
           font-size: 0.7em;
+        }
+
+        .name-container {
+          svg {
+            object-position: center center; // Center the SVG on mobile
+            margin: 0 auto; // Ensure it's centered
+          }
         }
       }
 
