@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+// Self-hosted Inter font for optimal performance
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../../public/assets/fonts/InterVariable.woff2') format('woff2');
+}
+
 $primaryColor : #ADFF2F;
 $primaryHeading : 4.1rem;
 $buttonText: black;
