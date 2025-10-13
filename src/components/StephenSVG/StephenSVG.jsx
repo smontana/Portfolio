@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react'
-import { animate, svg, stagger } from 'animejs'
 import './Style.scss'
 
 export const StephenSVG = () => {
@@ -13,32 +12,48 @@ export const StephenSVG = () => {
 
     const lines = ref.current.querySelectorAll('.line')
 
-    // If user prefers reduced motion, show static state
+    // If user prefers reduced motion, show static state immediately
     if (prefersReducedMotion) {
-      // Make sure all paths are fully visible
       lines.forEach(line => {
         line.style.strokeDasharray = 'none'
         line.style.strokeDashoffset = '0'
         line.style.opacity = '1'
-        line.style.fillOpacity = '0' // Keep fill transparent for outline effect
+        line.style.fillOpacity = '0'
       })
       return
     }
 
-    // Create the animated drawable for users who want animation
-    const drawable = svg.createDrawable(lines)
+    // Defer loading Anime.js until after initial render
+    const loadAndAnimate = async () => {
+      try {
+        // Lazy load anime.js only when needed
+        const { animate, svg, stagger } = await import('animejs')
 
-    // Create the animation - plays only 3 times then stops
-    animate(drawable, {
-      draw: ['0 0', '0 1', '1 1'],
-      ease: 'inSine',
-      duration: 3000,
-      delay: stagger(100),
-      alternate: true,
-      reversed: true,
-      loop: 2,
-      onComplete: () => {
-        // After animation finishes, show static state
+        // Create the animated drawable
+        const drawable = svg.createDrawable(lines)
+
+        // Create the animation - plays only 3 times then stops
+        animate(drawable, {
+          draw: ['0 0', '0 1', '1 1'],
+          ease: 'inSine',
+          duration: 3000,
+          delay: stagger(100),
+          alternate: true,
+          reversed: true,
+          loop: 2,
+          onComplete: () => {
+            // After animation finishes, show static state
+            lines.forEach(line => {
+              line.style.strokeDasharray = 'none'
+              line.style.strokeDashoffset = '0'
+              line.style.opacity = '1'
+              line.style.fillOpacity = '0'
+            })
+          }
+        })
+      } catch (error) {
+        console.error('Failed to load animation library:', error)
+        // Fallback to static state if animation fails
         lines.forEach(line => {
           line.style.strokeDasharray = 'none'
           line.style.strokeDashoffset = '0'
@@ -46,7 +61,17 @@ export const StephenSVG = () => {
           line.style.fillOpacity = '0'
         })
       }
-    })
+    }
+
+    // Use requestIdleCallback to defer animation loading
+    if ('requestIdleCallback' in window) {
+      const idleCallback = requestIdleCallback(() => loadAndAnimate(), { timeout: 1000 })
+      return () => cancelIdleCallback(idleCallback)
+    } else {
+      // Fallback for browsers without requestIdleCallback
+      const timer = setTimeout(loadAndAnimate, 500)
+      return () => clearTimeout(timer)
+    }
   }, [])
 
   return (
