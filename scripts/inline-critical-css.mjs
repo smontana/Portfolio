@@ -9,6 +9,16 @@ const __dirname = path.dirname(__filename);
 const buildDir = path.join(__dirname, '..', 'build');
 const indexPath = path.join(buildDir, 'index.html');
 
+// Check if running in Vercel/CI environment
+const isVercel = process.env.VERCEL === '1' || process.env.CI === 'true';
+
+if (isVercel) {
+  console.log('⚠️  Running in CI/Vercel environment');
+  console.log('ℹ️  Skipping critical CSS generation (Puppeteer not available in serverless)');
+  console.log('✅ Using pre-built assets without critical CSS inlining\n');
+  process.exit(0);
+}
+
 console.log('🎨 Inlining critical CSS...\n');
 
 // Generate critical CSS for the main page
