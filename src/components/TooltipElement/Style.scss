@@ -1,3 +1,4 @@
+// Legacy tooltip (from floating-ui) - keeping for reference
 .Tooltip {
   width: max-content;
   padding: 0.25rem 0.5rem;
@@ -6,4 +7,85 @@
   font-size: 0.9em;
   border-radius: 4px;
   z-index: 9999;
+}
+
+// New CSS-only tooltip (no JavaScript needed!)
+.skill-tooltip-wrapper {
+  position: relative;
+  display: inline-flex;
+  cursor: pointer;
+
+  // The tooltip itself
+  &::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    padding: 0.25rem 0.5rem;
+    background-color: #444;
+    color: white;
+    font-size: 0.9em;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 9999;
+  }
+
+  // Tooltip arrow
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-2px);
+    border: 5px solid transparent;
+    border-top-color: #444;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 9999;
+  }
+
+  // Show tooltip on hover and focus
+  &:hover::before,
+  &:hover::after,
+  &:focus-within::before,
+  &:focus-within::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  // Make icon focusable for keyboard navigation
+  svg {
+    outline: none;
+    transition: transform 0.2s ease;
+  }
+
+  &:hover svg,
+  &:focus-within svg {
+    transform: scale(1.1);
+  }
+
+  // Accessibility: show tooltip on focus
+  &:focus-within::before,
+  &:focus-within::after {
+    opacity: 1;
+  }
+}
+
+// Respect reduced motion preferences
+@media (prefers-reduced-motion: reduce) {
+  .skill-tooltip-wrapper {
+    &::before,
+    &::after {
+      transition: none;
+    }
+
+    svg {
+      transition: none;
+    }
+  }
 }
