@@ -3,7 +3,7 @@
   font-family: 'Inter';
   font-style: normal;
   font-weight: 100 900;
-  font-display: swap;
+  font-display: optional; // Prevents layout shift, uses fallback if font not loaded quickly
   src: url('../../public/assets/fonts/InterVariable.woff2') format('woff2');
 }
 
@@ -32,7 +32,8 @@ html::-webkit-scrollbar {
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    // Optimized font stack with system fonts that closely match Inter's metrics
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
     background-color: #1b1f22;
     color: white;
     width: 100%;
