@@ -48,6 +48,8 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "critical": "^7.2.1"
+    "@sparticuz/chromium": "^141.0.0",
+    "critical": "^7.2.1",
+    "puppeteer-core": "^24.25.0"
   }
 }

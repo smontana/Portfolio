@@ -2,7 +2,7 @@
 
 ## Build Process
 
-This project uses a two-stage build process:
+This project uses a two-stage build process with **serverless Chromium support**:
 
 ### Stage 1: React Build
 ```bash
@@ -10,54 +10,45 @@ npm run build:only
 ```
 Compiles React app using react-scripts.
 
-### Stage 2: Critical CSS Extraction (Local Only)
+### Stage 2: Critical CSS Extraction
 ```bash
 npm run build:critical
 ```
 Extracts and inlines critical CSS for faster First Contentful Paint.
 
-**Note:** This step requires Puppeteer (headless Chrome) which is **not available in Vercel's serverless environment**.
+**Now works on both local and Vercel environments!**
 
-## Deployment Workflows
+## Serverless Chromium Integration
 
-### Option 1: Deploy Without Critical CSS (Current)
+The project now uses `@sparticuz/chromium` and `puppeteer-core` to enable critical CSS generation in Vercel's serverless environment.
+
+### How It Works:
+
+**Local Development:**
+- Uses your system's Chrome/Chromium browser
+- Full critical CSS extraction with all features
+
+**Vercel Deployment:**
+- Automatically uses serverless Chromium (`@sparticuz/chromium`)
+- Full critical CSS extraction during build
+- No manual intervention needed
+
+## Deployment Workflow
+
 Simply push to GitHub and Vercel will build automatically:
 ```bash
 git push origin main
 ```
 
 Vercel runs `npm run build` which will:
-1. ✅ Build React app successfully
-2. ⚠️  Skip critical CSS generation (Puppeteer not available)
-3. ✅ Deploy successfully
-
-**Result:** Site works perfectly but without inlined critical CSS optimization.
-
-### Option 2: Deploy With Critical CSS (Manual)
-Generate critical CSS locally and commit the build:
-
-```bash
-# Build with critical CSS locally
-npm run build
-
-# Deploy the pre-built files
-vercel --prebuilt
-```
-
-**Note:** This requires Vercel CLI and manual deployment.
-
-### Option 3: Use Vercel's Chromium (Recommended for Critical CSS)
-
-Add to `package.json` dependencies:
-```json
-"@sparticuz/chromium": "^latest"
-```
-
-Then update `scripts/inline-critical-css.mjs` to use serverless Chromium.
+1. ✅ Build React app with react-scripts
+2. ✅ Generate critical CSS using serverless Chromium
+3. ✅ Inline critical CSS into HTML
+4. ✅ Deploy with full performance optimizations
 
 ## Performance Optimizations Included
 
-Without Critical CSS extraction, you still get:
+All deployments now include:
 - ✅ Font preloading with `fetchpriority="high"`
 - ✅ `font-display: optional` for no layout shift
 - ✅ System font fallbacks
@@ -65,18 +56,32 @@ Without Critical CSS extraction, you still get:
 - ✅ DNS prefetch hints
 - ✅ Image preloading
 - ✅ Proper CSP headers
+- ✅ **~2KB of critical CSS inlined in `<head>`**
+- ✅ **Async CSS loading with media swap trick**
+- ✅ **@font-face declaration in critical CSS**
 
-With Critical CSS (local builds):
-- ✅ All above optimizations
-- ✅ 2KB of critical CSS inlined in `<head>`
-- ✅ Async CSS loading with media swap trick
-- ✅ @font-face declaration in critical CSS
+## Testing Locally
 
-## Recommended Workflow
+Test the full build process:
+```bash
+npm run build
+```
 
-For now, **deploy without critical CSS** until we implement serverless Chromium support. The performance impact is minimal and the site will still be highly optimized.
+This will:
+1. Build React app
+2. Extract and inline critical CSS using your local Chrome
+3. Output build statistics
 
-To add critical CSS support on Vercel later:
-1. Install `@sparticuz/chromium` package
-2. Update the inline-critical-css script to use it
-3. Deploy normally through Git
+## Troubleshooting
+
+### Build fails on Vercel
+If the build fails with Chromium errors, check:
+- `@sparticuz/chromium` is in `devDependencies`
+- `puppeteer-core` is in `devDependencies`
+- Build logs show "Using serverless Chromium for Vercel"
+
+### Critical CSS not generated locally
+Make sure Chrome is installed at:
+- **macOS**: `/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`
+- **Linux**: `/usr/bin/chromium-browser`
+- **Windows**: `C:\Program Files\Google\Chrome\Application\chrome.exe`
