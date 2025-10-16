@@ -41,7 +41,6 @@ generate({
     timeout: 30000,
   },
   ignore: {
-    atrule: ['@font-face'], // Don't inline font-face (already preloaded)
     rule: [/^\.motion-safe/], // Keep motion-safe classes external
   },
   extract: true, // Extract inlined CSS from external files

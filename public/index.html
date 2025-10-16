@@ -12,7 +12,7 @@
 
   <!-- Security Headers -->
   <!-- Content Security Policy: Controls which resources can be loaded -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://www.google-analytics.com https://analytics.google.com;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://vitals.vercel-insights.com;" />
 
   <!-- Prevent MIME type sniffing -->
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
@@ -23,8 +23,12 @@
   <!-- Permissions Policy: Control browser features -->
   <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()" />
 
+  <!-- Preconnect to external origins (early DNS resolution and connection) -->
+  <link rel="preconnect" href="https://vitals.vercel-insights.com" crossorigin />
+  <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
+
   <!-- Preload critical font -->
-  <link rel="preload" as="font" href="%PUBLIC_URL%/assets/fonts/InterVariable.woff2" type="font/woff2" crossorigin="anonymous" />
+  <link rel="preload" as="font" fetchpriority="high" href="%PUBLIC_URL%/assets/fonts/InterVariable.woff2" type="font/woff2" crossorigin="anonymous" />
 
   <!-- Preload critical image -->
   <link rel="preload" as="image" fetchpriority="high" href="%PUBLIC_URL%/assets/images/me3d.webp" type="image/webp" />
