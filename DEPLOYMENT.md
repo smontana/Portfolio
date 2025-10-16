@@ -2,7 +2,7 @@
 
 ## Build Process
 
-This project uses a two-stage build process with **serverless Chromium support**:
+This project uses a two-stage build process with **simple, dependency-free critical CSS inlining**:
 
 ### Stage 1: React Build
 ```bash
@@ -10,28 +10,31 @@ npm run build:only
 ```
 Compiles React app using react-scripts.
 
-### Stage 2: Critical CSS Extraction
+### Stage 2: Critical CSS Inlining
 ```bash
 npm run build:critical
 ```
-Extracts and inlines critical CSS for faster First Contentful Paint.
+Inlines manually-defined critical CSS for faster First Contentful Paint.
 
-**Now works on both local and Vercel environments!**
+**Works everywhere - no Puppeteer/Chromium dependencies!**
 
-## Serverless Chromium Integration
+## Simple Critical CSS Approach
 
-The project now uses `@sparticuz/chromium` and `puppeteer-core` to enable critical CSS generation in Vercel's serverless environment.
+The project uses a lightweight Node.js script (`scripts/inline-critical-css-simple.mjs`) that:
+1. Reads the built HTML file
+2. Inlines critical CSS (manually defined) into a `<style>` tag
+3. Converts the main CSS to async loading with the media swap trick
+4. Adds noscript fallback for users with JS disabled
 
 ### How It Works:
 
-**Local Development:**
-- Uses your system's Chrome/Chromium browser
-- Full critical CSS extraction with all features
+**Critical CSS Includes:**
+- @font-face declaration (auto-detects font filename)
+- CSS resets and base styles
+- Body/root styles (colors, fonts)
+- Reduced motion preferences
 
-**Vercel Deployment:**
-- Automatically uses serverless Chromium (`@sparticuz/chromium`)
-- Full critical CSS extraction during build
-- No manual intervention needed
+**No external dependencies needed!**
 
 ## Deployment Workflow
 
@@ -72,16 +75,22 @@ This will:
 2. Extract and inline critical CSS using your local Chrome
 3. Output build statistics
 
-## Troubleshooting
+## Updating Critical CSS
 
-### Build fails on Vercel
-If the build fails with Chromium errors, check:
-- `@sparticuz/chromium` is in `devDependencies`
-- `puppeteer-core` is in `devDependencies`
-- Build logs show "Using serverless Chromium for Vercel"
+If you need to update the critical CSS (e.g., add new above-the-fold styles):
 
-### Critical CSS not generated locally
-Make sure Chrome is installed at:
-- **macOS**: `/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`
-- **Linux**: `/usr/bin/chromium-browser`
-- **Windows**: `C:\Program Files\Google\Chrome\Application\chrome.exe`
+1. Edit `scripts/inline-critical-css-simple.mjs`
+2. Update the `criticalCSS` template string
+3. Test locally with `npm run build`
+4. Deploy
+
+**Tip:** Keep critical CSS under 14KB for optimal performance.
+
+## Alternative: Advanced Critical CSS
+
+For automatic critical CSS extraction (requires Puppeteer), use:
+```bash
+npm run build:critical:advanced
+```
+
+This uses the `scripts/inline-critical-css.mjs` script with the `critical` package, but requires Puppeteer dependencies and won't work on Vercel without serverless Chromium support.

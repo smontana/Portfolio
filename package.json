@@ -22,7 +22,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && npm run build:critical",
-    "build:critical": "node scripts/inline-critical-css.mjs",
+    "build:critical": "node scripts/inline-critical-css-simple.mjs",
+    "build:critical:advanced": "node scripts/inline-critical-css.mjs",
     "build:only": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -47,9 +48,6 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@sparticuz/chromium": "^141.0.0",
-    "critical": "^7.2.1",
-    "puppeteer-core": "^24.25.0"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
