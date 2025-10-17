@@ -22,7 +22,9 @@ export const useInView = (options = {}) => {
   } = options;
 
   const ref = useRef(null);
-  const [isInView, setIsInView] = useState(false);
+  // Start as true to prevent flash of invisible content
+  // Will be set properly by Intersection Observer once mounted
+  const [isInView, setIsInView] = useState(true);
   const [hasTriggered, setHasTriggered] = useState(false);
 
   useEffect(() => {
