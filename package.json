@@ -24,6 +24,7 @@
     "build:critical": "node scripts/inline-critical-css-simple.mjs",
     "build:critical:advanced": "node scripts/inline-critical-css.mjs",
     "build:only": "craco build",
+    "build:images": "node scripts/generate-responsive-images.mjs",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "test": "craco test",
     "eject": "react-scripts eject"
@@ -50,6 +51,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@craco/craco": "^7.1.0",
+    "sharp": "^0.34.4",
     "source-map-explorer": "^2.5.3",
     "webpack-bundle-analyzer": "^4.10.2"
   }

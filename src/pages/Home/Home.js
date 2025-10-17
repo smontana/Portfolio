@@ -1,6 +1,6 @@
 import "./Style.scss";
 import { animations } from "../../styles";
-import { Socials, StephenSVG, LazyMotion, m, loadDomAnimationFeatures } from "../../components";
+import { Socials, StephenSVG, LazyMotion, m, loadDomAnimationFeatures, ResponsiveImage, MatrixImage } from "../../components";
 import { useState, useEffect } from "react";
 
 export const Home = () => {
@@ -170,19 +170,38 @@ export const Home = () => {
           </div>
 
           <div className="image-section">
-            <img
-              className={getGlitchClass()}
-              src={showMatrix ? "/assets/images/matrix.webp" : "/assets/images/me3d.webp"}
-              alt={showMatrix ? "Stephen Montana - 3D rendered portrait of a full stack developer in the matrix." : "Stephen Montana - 3D rendered portrait of a full stack developer"}
-              fetchpriority="high"
-              width="400"
-              height="400"
-              onClick={handleImageClick}
-              onTouchStart={handleTouchStart}
-              onTouchEnd={handleTouchEnd}
-              onTouchCancel={handleTouchEnd}
-              style={{ cursor: showMatrix ? 'default' : 'pointer', userSelect: 'none' }}
-            />
+            {showMatrix ? (
+              <MatrixImage
+                className={getGlitchClass()}
+                alt="Stephen Montana - 3D rendered portrait of a full stack developer in the matrix."
+                fetchpriority="high"
+                loading="eager"
+                width="400"
+                height="400"
+                sizes="(max-width: 640px) 340px, (max-width: 1024px) 400px, 510px"
+                onClick={handleImageClick}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+                onTouchCancel={handleTouchEnd}
+                style={{ cursor: 'default', userSelect: 'none' }}
+              />
+            ) : (
+              <ResponsiveImage
+                baseName="me3d"
+                className={getGlitchClass()}
+                alt="Stephen Montana - 3D rendered portrait of a full stack developer"
+                fetchpriority="high"
+                loading="eager"
+                width="340"
+                height="510"
+                sizes="(max-width: 640px) 170px, (max-width: 1024px) 340px, 510px"
+                onClick={handleImageClick}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+                onTouchCancel={handleTouchEnd}
+                style={{ cursor: 'pointer', userSelect: 'none' }}
+              />
+            )}
           </div>
 
           {/* Reality Mode Toggle */}

@@ -30,8 +30,17 @@
   <!-- Preload critical font -->
   <link rel="preload" as="font" fetchpriority="high" href="%PUBLIC_URL%/assets/fonts/InterVariable.woff2" type="font/woff2" crossorigin="anonymous" />
 
-  <!-- Preload critical image -->
-  <link rel="preload" as="image" fetchpriority="high" href="%PUBLIC_URL%/assets/images/me3d.webp" type="image/webp" />
+  <!-- Preload critical hero image (AVIF with WebP fallback) -->
+  <link rel="preload" as="image" fetchpriority="high"
+        href="%PUBLIC_URL%/assets/images/responsive/me3d-md.avif"
+        type="image/avif"
+        imagesrcset="%PUBLIC_URL%/assets/images/responsive/me3d-sm.avif 170w, %PUBLIC_URL%/assets/images/responsive/me3d-md.avif 340w, %PUBLIC_URL%/assets/images/responsive/me3d-lg.avif 510w"
+        imagesizes="(max-width: 640px) 170px, (max-width: 1024px) 340px, 510px" />
+  <link rel="preload" as="image" fetchpriority="high"
+        href="%PUBLIC_URL%/assets/images/responsive/me3d-md.webp"
+        type="image/webp"
+        imagesrcset="%PUBLIC_URL%/assets/images/responsive/me3d-sm.webp 170w, %PUBLIC_URL%/assets/images/responsive/me3d-md.webp 340w, %PUBLIC_URL%/assets/images/responsive/me3d-lg.webp 510w"
+        imagesizes="(max-width: 640px) 170px, (max-width: 1024px) 340px, 510px" />
 
   <!--
     Note: Critical JS chunks (vendor-react, runtime, main) are automatically preloaded
