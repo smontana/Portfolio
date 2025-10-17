@@ -14,36 +14,24 @@ module.exports = {
         }
 
         // Configure optimization splitChunks for better caching
+        // OPTIMIZED: Fewer initial chunks for better PageSpeed score
         webpackConfig.optimization.splitChunks = {
           chunks: 'all',
           cacheGroups: {
-            // Separate React and ReactDOM into their own vendor bundle
-            // This rarely changes between deployments, enabling long-term caching
+            // Combine React, ReactDOM, and React Router into single vendor bundle
+            // This reduces HTTP requests while still enabling long-term caching
             reactVendor: {
-              test: /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/,
+              test: /[\\/]node_modules[\\/](react|react-dom|scheduler|react-router|react-router-dom)[\\/]/,
               name: 'vendor-react',
               priority: 40,
               reuseExistingChunk: true,
             },
-            // Separate React Router into its own chunk
-            routerVendor: {
-              test: /[\\/]node_modules[\\/](react-router|react-router-dom)[\\/]/,
-              name: 'vendor-router',
-              priority: 35,
-              reuseExistingChunk: true,
-            },
-            // Separate Framer Motion (large animation library)
-            framerVendor: {
-              test: /[\\/]node_modules[\\/](framer-motion)[\\/]/,
-              name: 'vendor-framer',
+            // Combine Framer Motion and React Icons into single vendor bundle
+            // Both are used together on most pages
+            uiVendor: {
+              test: /[\\/]node_modules[\\/](framer-motion|react-icons)[\\/]/,
+              name: 'vendor-ui',
               priority: 30,
-              reuseExistingChunk: true,
-            },
-            // Separate React Icons (can be large)
-            iconsVendor: {
-              test: /[\\/]node_modules[\\/](react-icons)[\\/]/,
-              name: 'vendor-icons',
-              priority: 25,
               reuseExistingChunk: true,
             },
             // Other node_modules go into a common vendor chunk
@@ -53,20 +41,14 @@ module.exports = {
               priority: 20,
               reuseExistingChunk: true,
             },
-            // Extract common code shared between chunks
-            common: {
-              minChunks: 2,
-              priority: 10,
-              reuseExistingChunk: true,
-              enforce: true,
-            },
           },
-          // Maximum async requests for on-demand loading
-          maxAsyncRequests: 10,
-          // Maximum initial requests (parallel downloads on page load)
-          maxInitialRequests: 10,
-          // Minimum size for a chunk to be generated (20kb)
-          minSize: 20000,
+          // Limit async requests for lazy-loaded routes
+          maxAsyncRequests: 6,
+          // CRITICAL: Limit initial requests for better initial load performance
+          // 4 chunks on initial load: runtime + vendor-react + vendor-ui + main
+          maxInitialRequests: 4,
+          // Minimum size for a chunk to be generated (30kb for fewer small chunks)
+          minSize: 30000,
         };
 
         // Configure runtime chunk for better caching
