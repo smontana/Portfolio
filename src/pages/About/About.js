@@ -1,7 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import "./Style.scss";
-import { Heading, SkillTooltip, LazyMotion, m, loadDomAnimationFeatures } from "../../components";
-import { animations } from "../../styles";
+import "../../styles/animations/animations.css";
+import { Heading, SkillTooltip } from "../../components";
+import { useInView } from "../../hooks/useInView";
 import {
   BiLogoJavascript,
   BiLogoTypescript,
@@ -19,22 +20,30 @@ import { TbBrandFramerMotion } from "react-icons/tb";
 
 
 export const About = () => {
+  const [pRef, pInView] = useInView({ threshold: 0.1 });
+  const [skillsRef, skillsInView] = useInView({ threshold: 0.1 });
+
   return (
     <>
-      <LazyMotion features={loadDomAnimationFeatures} strict>
-        <main id="main-content" className="about">
-          <Heading Heading={"About me"} />
-          <div className="info">
-            <m.p {...animations.fade}>
+      <main id="main-content" className="about">
+        <Heading Heading={"About me"} />
+        <div className="info">
+          <p
+            ref={pRef}
+            className={`motion-safe ${pInView ? 'animate-fade' : ''}`}
+          >
             As a dedicated, Full Stack Software Developer, I specialize in creating applications that solve problems and delight users.
             With over 10 years of development experience, I thrive at solving problems through the creation of thoughtful solutions.
             My journey has been marked by a commitment to fostering a culture of innovation, collaboration, and continuous learning.
             Whether it's shaping scalable architectures, implementing cutting-edge technologies, or optimizing performance for exceptional user experiences,
             I'm driven by a relentless pursuit of excellence.
             I work to bridge the gap between business objectives and technical execution, translating visions into tangible outcomes that exceed expectations.
-            </m.p>
-          </div>
-          <m.div {...animations.fade} className="skills">
+          </p>
+        </div>
+        <div
+          ref={skillsRef}
+          className={`skills motion-safe ${skillsInView ? 'animate-fade animate-delay-200' : ''}`}
+        >
           <h2>Skilled at : </h2>
           <div className="icons">
             <SkillTooltip Icon={BiLogoJavascript} color="yellow" label="JavaScript" />
@@ -54,9 +63,8 @@ export const About = () => {
             <SkillTooltip Icon={DiDotnet} color="blueviolet" label=".NET" />
             <SkillTooltip Icon={BiLogoMongodb} color="green" label="MongoDB" />
           </div>
-        </m.div>
-        </main>
-      </LazyMotion>
+        </div>
+      </main>
     </>
   );
 };

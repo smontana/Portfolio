@@ -1,6 +1,7 @@
 import "./Style.scss";
-import { animations } from "../../styles";
-import { Socials, StephenSVG, LazyMotion, m, loadDomAnimationFeatures, ResponsiveImage, MatrixImage } from "../../components";
+import "../../styles/animations/animations.css";
+import { Socials, StephenSVG, ResponsiveImage, MatrixImage } from "../../components";
+import { useInView } from "../../hooks/useInView";
 import { useState, useEffect } from "react";
 
 export const Home = () => {
@@ -10,6 +11,11 @@ export const Home = () => {
   const [glitchLevel, setGlitchLevel] = useState(0); // 0: none, 1: subtle, 2: intense, 3: matrix
   const [showToggle, setShowToggle] = useState(false);
   const [easterEggReady, setEasterEggReady] = useState(false);
+
+  // Intersection Observer hooks for animations
+  const [h1Ref, h1InView] = useInView({ threshold: 0.1 });
+  const [h2Ref, h2InView] = useInView({ threshold: 0.1 });
+  const [pRef, pInView] = useInView({ threshold: 0.1 });
 
   const activateMatrix = () => {
     setShowMatrix(true);
@@ -143,31 +149,39 @@ export const Home = () => {
 
   return (
     <>
-      <LazyMotion features={loadDomAnimationFeatures} strict>
-        <main
-          id="main-content"
-          className={`home ${showMatrix ? 'matrix-mode' : ''}`}
-          role="main"
-        >
-          <div className="info-section">
-            <m.h1 {...animations.h1} className="motion-safe">
-                <span className="greeting">Hi, I'm</span>
-                <span className="name-container" aria-label="Stephen">
-                  <StephenSVG />
-                </span>
-            </m.h1>
-            <m.h2 {...animations.fade} className="subtitle motion-safe">
-              A Full Stack Developer
-            </m.h2>
-            <m.p {...animations.fade} className="intro-text motion-safe">
-              If you're working on something cool,{' '}
-              <span className="line-break" aria-hidden="true"><br /></span>
-              reach out and let's collaborate!
-            </m.p>
-            <div aria-label="Connect with me on social media">
-              <Socials />
-            </div>
+      <main
+        id="main-content"
+        className={`home ${showMatrix ? 'matrix-mode' : ''}`}
+        role="main"
+      >
+        <div className="info-section">
+          <h1
+            ref={h1Ref}
+            className={`motion-safe ${h1InView ? 'animate-slide-spring' : ''}`}
+          >
+            <span className="greeting">Hi, I'm</span>
+            <span className="name-container" aria-label="Stephen">
+              <StephenSVG />
+            </span>
+          </h1>
+          <h2
+            ref={h2Ref}
+            className={`subtitle motion-safe ${h2InView ? 'animate-fade' : ''}`}
+          >
+            A Full Stack Developer
+          </h2>
+          <p
+            ref={pRef}
+            className={`intro-text motion-safe ${pInView ? 'animate-fade animate-delay-200' : ''}`}
+          >
+            If you're working on something cool,{' '}
+            <span className="line-break" aria-hidden="true"><br /></span>
+            reach out and let's collaborate!
+          </p>
+          <div aria-label="Connect with me on social media">
+            <Socials />
           </div>
+        </div>
 
           <div className="image-section">
             {showMatrix ? (
@@ -220,8 +234,7 @@ export const Home = () => {
               </span>
             </button>
           )}
-        </main>
-      </LazyMotion>
+      </main>
     </>
   );
 };

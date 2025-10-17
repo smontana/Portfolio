@@ -15,6 +15,7 @@ module.exports = {
 
         // Configure optimization splitChunks for better caching
         // OPTIMIZED: Fewer initial chunks for better PageSpeed score
+        // Framer Motion removed - using pure CSS animations instead
         webpackConfig.optimization.splitChunks = {
           chunks: 'all',
           cacheGroups: {
@@ -26,11 +27,10 @@ module.exports = {
               priority: 40,
               reuseExistingChunk: true,
             },
-            // Combine Framer Motion and React Icons into single vendor bundle
-            // Both are used together on most pages
-            uiVendor: {
-              test: /[\\/]node_modules[\\/](framer-motion|react-icons)[\\/]/,
-              name: 'vendor-ui',
+            // React Icons vendor bundle (still used for skill icons)
+            iconsVendor: {
+              test: /[\\/]node_modules[\\/](react-icons)[\\/]/,
+              name: 'vendor-icons',
               priority: 30,
               reuseExistingChunk: true,
             },
@@ -45,7 +45,7 @@ module.exports = {
           // Limit async requests for lazy-loaded routes
           maxAsyncRequests: 6,
           // CRITICAL: Limit initial requests for better initial load performance
-          // 4 chunks on initial load: runtime + vendor-react + vendor-ui + main
+          // 4 chunks on initial load: runtime + vendor-react + vendor-icons + main
           maxInitialRequests: 4,
           // Minimum size for a chunk to be generated (30kb for fewer small chunks)
           minSize: 30000,

@@ -1,7 +1,9 @@
 import { useState } from "react";
 import "./Style.scss";
+import "../../styles/animations/animations.css";
 import Data from "../../assets/Data.json";
-import { Card, Heading, LoadMore, LazyMotion, m, loadDomAnimationFeatures } from "../../components";
+import { Card, Heading, LoadMore } from "../../components";
+import { useInView } from "../../hooks/useInView";
 import {
   BiLogoJavascript,
   BiLogoMongodb,
@@ -13,12 +15,12 @@ import {
 } from "react-icons/bi";
 import { TbBrandNextjs } from "react-icons/tb";
 import { SiExpress, SiTailwindcss } from "react-icons/si";
-import { animations } from "../../styles";
 
 export const Work = () => {
   const [projects, setProjects] = useState(Data.slice(0, 5));
   const [showAllProjects, setShowAllProjects] = useState(false);
   const [display, setDisplay] = useState("none");
+  const [iconsRef, iconsInView] = useInView({ threshold: 0.1 });
 
   const handleShowAllProjects = () => {
     setProjects(Data);
@@ -33,12 +35,11 @@ export const Work = () => {
   };
 
   return (
-    <LazyMotion features={loadDomAnimationFeatures} strict>
-      <div className="work">
-        <Heading Heading={"my work"} />
-        <m.div
-        className="icons"
-        {...animations.bar}
+    <div className="work">
+      <Heading Heading={"my work"} />
+      <div
+        ref={iconsRef}
+        className={`icons motion-safe ${iconsInView ? 'animate-bar' : ''}`}
         style={{
           fontSize: "3rem",
           justifyContent: "center",
@@ -86,7 +87,7 @@ export const Work = () => {
           style={{ color: "#e535ab ", cursor: "pointer" }}
           onClick={() => filterProjectsBySkill("graphql")}
         />
-      </m.div>
+      </div>
       <div className="cards">
         {projects.map((value) => (
           <Card
@@ -106,8 +107,7 @@ export const Work = () => {
           />
         )}
       </div>
-      </div>
-    </LazyMotion>
+    </div>
   );
 };
 
