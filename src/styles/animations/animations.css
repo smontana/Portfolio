@@ -88,6 +88,13 @@
   animation-delay: 0.4s;
 }
 
+/* Ensure text is visible in matrix mode */
+.matrix-mode .animate-fade,
+.matrix-mode .animate-slide-spring {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
 /* Respect user's motion preferences */
 @media (prefers-reduced-motion: reduce) {
   .animate-fade,
