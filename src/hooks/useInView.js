@@ -68,10 +68,10 @@ export const useInView = (options = {}) => {
           if (triggerOnce) {
             setHasTriggered(true);
           }
-        } else if (!triggerOnce) {
-          // Only reset if triggerOnce is false
-          setIsInView(false);
         }
+        // IMPORTANT: Never set isInView to false on initial load
+        // Only hide elements if triggerOnce is false AND we've already triggered once
+        // This prevents elements from being hidden on initial render
       },
       {
         threshold,
