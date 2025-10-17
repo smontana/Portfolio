@@ -154,17 +154,17 @@ export const Home = () => {
         className={`home ${showMatrix ? 'matrix-mode' : ''}`}
         role="main"
       >
-        <div className="info-section">
-          <h1>
+        <div className="info-section" style={{ opacity: 1, visibility: 'visible' }}>
+          <h1 style={{ opacity: 1, visibility: 'visible' }}>
             <span className="greeting">Hi, I'm</span>
             <span className="name-container" aria-label="Stephen">
               <StephenSVG />
             </span>
           </h1>
-          <h2 className="subtitle">
+          <h2 className="subtitle" style={{ opacity: 1, visibility: 'visible' }}>
             A Full Stack Developer
           </h2>
-          <p className="intro-text">
+          <p className="intro-text" style={{ opacity: 1, visibility: 'visible' }}>
             If you're working on something cool,{' '}
             <span className="line-break" aria-hidden="true"><br /></span>
             reach out and let's collaborate!
