@@ -37,6 +37,24 @@
         imagesrcset="%PUBLIC_URL%/assets/images/responsive/me3d-sm.avif 170w, %PUBLIC_URL%/assets/images/responsive/me3d-md.avif 340w, %PUBLIC_URL%/assets/images/responsive/me3d-lg.avif 510w"
         imagesizes="(max-width: 640px) 170px, (max-width: 1024px) 340px, 510px" />
 
+  <!-- Critical CSS for instant hero image rendering (prevents layout shift) -->
+  <style>
+    /* Prevent layout shift and flash of unstyled content - matches Home page styles */
+    body { margin: 0; background-color: #000; color: #fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    #root { min-height: 100vh; }
+    .home { display: flex; width: 100%; padding-inline: 30px; justify-content: space-evenly; align-items: center; min-height: 75vh; gap: 2rem; }
+    .info-section { display: flex; flex-direction: column; gap: 1.3rem; flex-basis: 25rem; max-width: 600px; }
+    .image-section { width: 400px; height: 500px; max-width: 100%; }
+    .image-section img { height: 100%; width: 100%; object-fit: cover; border-radius: 50%; border: 3px solid rgba(173, 255, 47, 0.3); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); max-width: 100%; max-height: 100%; }
+
+    /* Mobile breakpoint at 700px */
+    @media screen and (max-width: 700px) {
+      .home { flex-direction: column; align-items: center; min-height: auto; padding-inline: 20px; padding-block: 2rem; gap: 2rem; }
+      .info-section { padding: 0; text-align: center; align-items: center; max-width: 100%; }
+      .image-section { width: min(80vw, 400px); height: min(80vw, 500px); order: -1; }
+    }
+  </style>
+
   <!--
     Note: Critical JS chunks (vendor-react, runtime, main) are automatically preloaded
     by webpack via <script> tags with defer attribute for optimal loading.
@@ -50,7 +68,33 @@
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div id="root"></div>
+  <div id="root">
+    <!-- Pre-render hero image for instant LCP - React will hydrate over this -->
+    <main id="main-content" class="home" role="main">
+      <div class="info-section">
+        <!-- Content will be hydrated by React -->
+      </div>
+      <div class="image-section">
+        <picture>
+          <source type="image/avif"
+                  srcset="/assets/images/responsive/me3d-sm.avif 170w,
+                          /assets/images/responsive/me3d-md.avif 340w,
+                          /assets/images/responsive/me3d-lg.avif 510w"
+                  sizes="(max-width: 640px) 170px, (max-width: 1024px) 340px, 510px">
+          <source type="image/webp"
+                  srcset="/assets/images/responsive/me3d-sm.webp 170w,
+                          /assets/images/responsive/me3d-md.webp 340w,
+                          /assets/images/responsive/me3d-lg.webp 510w"
+                  sizes="(max-width: 640px) 170px, (max-width: 1024px) 340px, 510px">
+          <img src="/assets/images/responsive/me3d-md.avif"
+               alt="Stephen Montana - 3D rendered portrait of a full stack developer"
+               width="340" height="510"
+               fetchpriority="high"
+               loading="eager">
+        </picture>
+      </div>
+    </main>
+  </div>
 </body>
 
 </html>
