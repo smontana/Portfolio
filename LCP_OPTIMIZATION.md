@@ -1,5 +1,7 @@
 # LCP Optimization Guide
 
+**NOTE:** This did not work as expected and actually increased the Element render delay by nearly double. Leaving this document for future review if necessary.
+
 ## Problem Analysis
 
 **Original LCP**: 3.9 seconds (1160ms breakdown + network delays)
