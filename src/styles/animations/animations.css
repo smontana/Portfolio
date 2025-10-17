@@ -42,20 +42,16 @@
   }
 }
 
-/* Animation Classes */
+/* Animation Classes - Only animate when class is present */
 .animate-fade {
-  opacity: 0;
   animation: fadeIn 1s ease-out forwards;
 }
 
 .animate-bar {
-  width: 0%;
   animation: expandWidth 0.6s ease-out forwards;
 }
 
 .animate-slide-spring {
-  transform: translateX(-100%);
-  opacity: 0;
   animation: slideInSpring 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
@@ -114,11 +110,7 @@
   }
 }
 
-/* Motion-safe wrapper class (matches existing pattern) */
-.motion-safe {
-  /* Elements with this class will use animations unless user prefers reduced motion */
-}
-
+/* Motion-safe wrapper class - disable animations for users who prefer reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .motion-safe {
     animation: none !important;

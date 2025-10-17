@@ -45,6 +45,25 @@ export const useInView = (options = {}) => {
       return;
     }
 
+    // Check if element is already in viewport on mount
+    const rect = element.getBoundingClientRect();
+    const isInitiallyVisible = rect.top < window.innerHeight && rect.bottom > 0;
+
+    if (isInitiallyVisible) {
+      // Element is already visible, keep it visible
+      setIsInView(true);
+      if (triggerOnce) {
+        setHasTriggered(true);
+      }
+      // Still set up observer for elements that might scroll out
+      if (!triggerOnce) {
+        // Observer setup below will handle scroll out behavior
+      } else {
+        // If triggerOnce and already visible, no need for observer
+        return;
+      }
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         const isVisible = entry.isIntersecting;
