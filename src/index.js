@@ -31,10 +31,18 @@ function RoutePrefetcher() {
     // Use requestIdleCallback to prefetch during idle time
     const idleCallback = requestIdleCallback ?
       requestIdleCallback(() => {
+        // Prefetch route chunks via dynamic import
         routesToPrefetch.forEach(route => {
-          if (route === '/about') About.preload?.();
-          if (route === '/work') Work.preload?.();
-          if (route === '/') Home.preload?.();
+          if (route === '/about') {
+            // Trigger webpack prefetch
+            import(/* webpackPrefetch: true */ './pages/About/About');
+          }
+          if (route === '/work') {
+            import(/* webpackPrefetch: true */ './pages/Work/Work');
+          }
+          if (route === '/') {
+            import(/* webpackPrefetch: true */ './pages/Home/Home');
+          }
         });
       }, { timeout: 2000 }) : null;
 

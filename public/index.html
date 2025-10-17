@@ -33,6 +33,14 @@
   <!-- Preload critical image -->
   <link rel="preload" as="image" fetchpriority="high" href="%PUBLIC_URL%/assets/images/me3d.webp" type="image/webp" />
 
+  <!--
+    Note: Critical JS chunks (vendor-react, runtime, main) are automatically preloaded
+    by webpack via <script> tags with defer attribute for optimal loading.
+
+    Non-critical route chunks (About, Work pages) are prefetched during idle time
+    via the RoutePrefetcher component in src/index.js using requestIdleCallback.
+  -->
+
   <title>Stephen Montana</title>
 </head>
 

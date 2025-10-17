@@ -3,6 +3,16 @@ module.exports = {
     configure: (webpackConfig, { env }) => {
       // Only apply in production
       if (env === 'production') {
+        // Find HtmlWebpackPlugin instance and configure script loading
+        const htmlWebpackPluginInstance = webpackConfig.plugins.find(
+          plugin => plugin.constructor.name === 'HtmlWebpackPlugin'
+        );
+
+        if (htmlWebpackPluginInstance && htmlWebpackPluginInstance.userOptions) {
+          // Ensure scripts are deferred for better performance
+          htmlWebpackPluginInstance.userOptions.scriptLoading = 'defer';
+        }
+
         // Configure optimization splitChunks for better caching
         webpackConfig.optimization.splitChunks = {
           chunks: 'all',
