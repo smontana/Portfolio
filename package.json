@@ -19,13 +19,13 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build && npm run build:critical",
+    "start": "craco start",
+    "build": "craco build && npm run build:critical",
     "build:critical": "node scripts/inline-critical-css-simple.mjs",
     "build:critical:advanced": "node scripts/inline-critical-css.mjs",
-    "build:only": "react-scripts build",
+    "build:only": "craco build",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "test": "react-scripts test",
+    "test": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -49,6 +49,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@craco/craco": "^7.1.0",
     "source-map-explorer": "^2.5.3",
     "webpack-bundle-analyzer": "^4.10.2"
   }
