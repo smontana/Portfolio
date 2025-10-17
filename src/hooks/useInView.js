@@ -22,48 +22,42 @@ export const useInView = (options = {}) => {
   } = options;
 
   const ref = useRef(null);
-  // Start as true to prevent flash of invisible content
-  // Will be set properly by Intersection Observer once mounted
+  // Always start as true - content should be visible by default
   const [isInView, setIsInView] = useState(true);
   const [hasTriggered, setHasTriggered] = useState(false);
 
   useEffect(() => {
     const element = ref.current;
-    if (!element) return;
+
+    // If no element, keep visible
+    if (!element) {
+      setIsInView(true);
+      return;
+    }
 
     // Check for reduced motion preference
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // If user prefers reduced motion, immediately set to visible
+    // If user prefers reduced motion, keep visible and don't animate
     if (prefersReducedMotion) {
       setIsInView(true);
       return;
     }
 
-    // If already triggered and triggerOnce is true, don't setup observer
-    if (triggerOnce && hasTriggered) {
+    // Check if IntersectionObserver is supported
+    if (!('IntersectionObserver' in window)) {
+      // Fallback: keep content visible if IO not supported
+      setIsInView(true);
       return;
     }
 
-    // Check if element is already in viewport on mount
-    const rect = element.getBoundingClientRect();
-    const isInitiallyVisible = rect.top < window.innerHeight && rect.bottom > 0;
-
-    if (isInitiallyVisible) {
-      // Element is already visible, keep it visible
+    // If already triggered and triggerOnce is true, keep visible
+    if (triggerOnce && hasTriggered) {
       setIsInView(true);
-      if (triggerOnce) {
-        setHasTriggered(true);
-      }
-      // Still set up observer for elements that might scroll out
-      if (!triggerOnce) {
-        // Observer setup below will handle scroll out behavior
-      } else {
-        // If triggerOnce and already visible, no need for observer
-        return;
-      }
+      return;
     }
 
+    // Set up Intersection Observer
     const observer = new IntersectionObserver(
       ([entry]) => {
         const isVisible = entry.isIntersecting;
