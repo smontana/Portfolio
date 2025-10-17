@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import "./Style.scss";
-import { Heading, SkillTooltip, LazyMotion, m, domAnimation } from "../../components";
+import { Heading, SkillTooltip, LazyMotion, m, loadDomAnimationFeatures } from "../../components";
 import { animations } from "../../styles";
 import {
   BiLogoJavascript,
@@ -21,7 +21,7 @@ import { TbBrandFramerMotion } from "react-icons/tb";
 export const About = () => {
   return (
     <>
-      <LazyMotion features={domAnimation} strict>
+      <LazyMotion features={loadDomAnimationFeatures} strict>
         <main id="main-content" className="about">
           <Heading Heading={"About me"} />
           <div className="info">

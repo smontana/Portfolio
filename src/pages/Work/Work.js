@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./Style.scss";
 import Data from "../../assets/Data.json";
-import { Card, Heading, LoadMore, LazyMotion, m, domAnimation } from "../../components";
+import { Card, Heading, LoadMore, LazyMotion, m, loadDomAnimationFeatures } from "../../components";
 import {
   BiLogoJavascript,
   BiLogoMongodb,
@@ -33,7 +33,7 @@ export const Work = () => {
   };
 
   return (
-    <LazyMotion features={domAnimation} strict>
+    <LazyMotion features={loadDomAnimationFeatures} strict>
       <div className="work">
         <Heading Heading={"my work"} />
         <m.div

@@ -1,6 +1,6 @@
 import "./Style.scss";
 import { animations } from "../../styles";
-import { Socials, StephenSVG, LazyMotion, m, domAnimation } from "../../components";
+import { Socials, StephenSVG, LazyMotion, m, loadDomAnimationFeatures } from "../../components";
 import { useState, useEffect } from "react";
 
 export const Home = () => {
@@ -143,7 +143,7 @@ export const Home = () => {
 
   return (
     <>
-      <LazyMotion features={domAnimation} strict>
+      <LazyMotion features={loadDomAnimationFeatures} strict>
         <main
           id="main-content"
           className={`home ${showMatrix ? 'matrix-mode' : ''}`}
