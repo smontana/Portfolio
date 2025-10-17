@@ -29,8 +29,8 @@ function RoutePrefetcher() {
     const routesToPrefetch = prefetchMap[location.pathname] || [];
 
     // Use requestIdleCallback to prefetch during idle time
-    const idleCallback = requestIdleCallback ?
-      requestIdleCallback(() => {
+    const idleCallback = typeof window.requestIdleCallback !== 'undefined' ?
+      window.requestIdleCallback(() => {
         // Prefetch route chunks via dynamic import
         routesToPrefetch.forEach(route => {
           if (route === '/about') {
@@ -47,8 +47,8 @@ function RoutePrefetcher() {
       }, { timeout: 2000 }) : null;
 
     return () => {
-      if (idleCallback && cancelIdleCallback) {
-        cancelIdleCallback(idleCallback);
+      if (idleCallback && typeof window.cancelIdleCallback !== 'undefined') {
+        window.cancelIdleCallback(idleCallback);
       }
     };
   }, [location.pathname]);

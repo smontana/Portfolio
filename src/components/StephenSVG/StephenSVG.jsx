@@ -65,8 +65,8 @@ export const StephenSVG = () => {
 
     // Use requestIdleCallback to defer animation loading
     if ('requestIdleCallback' in window) {
-      const idleCallback = requestIdleCallback(() => loadAndAnimate(), { timeout: 1000 })
-      return () => cancelIdleCallback(idleCallback)
+      const idleCallback = window.requestIdleCallback(() => loadAndAnimate(), { timeout: 1000 })
+      return () => window.cancelIdleCallback(idleCallback)
     } else {
       // Fallback for browsers without requestIdleCallback
       const timer = setTimeout(loadAndAnimate, 500)

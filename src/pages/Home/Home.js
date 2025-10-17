@@ -51,9 +51,9 @@ export const Home = () => {
 
     // Try to use requestIdleCallback for better performance, fallback to setTimeout
     if ('requestIdleCallback' in window) {
-      const idleCallback = requestIdleCallback(initEasterEgg, { timeout: 2000 });
+      const idleCallback = window.requestIdleCallback(initEasterEgg, { timeout: 2000 });
       return () => {
-        cancelIdleCallback(idleCallback);
+        window.cancelIdleCallback(idleCallback);
         delete window.redpill;
         delete window['red-pill'];
         delete window.red_pill;
