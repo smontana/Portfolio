@@ -1,32 +1,33 @@
 import "./Style.scss";
 import "../../styles/animations/animations.css";
-import { Socials, StephenSVG, ResponsiveImage, MatrixImage } from "../../components";
+import { Socials, StephenSVG, ResponsiveImage } from "../../components";
 import { useInView } from "../../hooks/useInView";
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
+
+// Lazy load MatrixImage - only loads when easter egg is activated
+const MatrixImage = lazy(() =>
+  import("../../components").then(module => ({ default: module.MatrixImage }))
+);
 
 export const Home = () => {
-  const [showMatrix, setShowMatrix] = useState(false);
-  const [tapCount, setTapCount] = useState(0);
-  const [longPressTimer, setLongPressTimer] = useState(null);
-  const [glitchLevel, setGlitchLevel] = useState(0); // 0: none, 1: subtle, 2: intense, 3: matrix
-  const [showToggle, setShowToggle] = useState(false);
-  const [easterEggReady, setEasterEggReady] = useState(false);
-
   // Intersection Observer hooks for animations
   const [h1Ref, h1InView] = useInView({ threshold: 0.1 });
   const [h2Ref, h2InView] = useInView({ threshold: 0.1 });
   const [pRef, pInView] = useInView({ threshold: 0.1 });
 
+  // Easter egg state (simplified - logic loaded lazily)
+  const [showMatrix, setShowMatrix] = useState(false);
+  const [tapCount, setTapCount] = useState(0);
+  const [longPressTimer, setLongPressTimer] = useState(null);
+  const [glitchLevel, setGlitchLevel] = useState(0);
+  const [showToggle, setShowToggle] = useState(false);
+  const [easterEggEnabled, setEasterEggEnabled] = useState(false);
+
   const activateMatrix = () => {
     setShowMatrix(true);
     setGlitchLevel(3);
     console.log("Welcome to the Matrix...");
-
-    // Show toggle 1 second after matrix activation
-    setTimeout(() => {
-      setShowToggle(true);
-    }, 1000);
-
+    setTimeout(() => setShowToggle(true), 1000);
     return "You have chosen the red pill. There is no turning back.";
   };
 
@@ -34,11 +35,10 @@ export const Home = () => {
     setShowMatrix(!showMatrix);
   };
 
-  // Defer ALL Matrix easter egg logic until after initial paint
+  // Defer easter egg initialization until after initial paint
   useEffect(() => {
-    // Use requestIdleCallback or setTimeout to defer until browser is idle
     const initEasterEgg = () => {
-      setEasterEggReady(true);
+      setEasterEggEnabled(true);
 
       // Setup console commands
       window.redpill = activateMatrix;
@@ -49,7 +49,6 @@ export const Home = () => {
       window.r = activateMatrix;
     };
 
-    // Try to use requestIdleCallback for better performance, fallback to setTimeout
     if ('requestIdleCallback' in window) {
       const idleCallback = window.requestIdleCallback(initEasterEgg, { timeout: 2000 });
       return () => {
@@ -75,32 +74,29 @@ export const Home = () => {
     }
   }, []);
 
-  // Reset tap count after 1 second of inactivity (only if easter egg is ready)
+  // Reset tap count after 1 second of inactivity
   useEffect(() => {
-    if (!easterEggReady) return;
+    if (!easterEggEnabled) return;
     if (tapCount > 0 && tapCount < 5) {
       const timer = setTimeout(() => setTapCount(0), 1000);
       return () => clearTimeout(timer);
     }
-  }, [tapCount, easterEggReady]);
+  }, [tapCount, easterEggEnabled]);
 
-  // Time-based glitch escalation (only start after easter egg is ready)
+  // Time-based glitch escalation (deferred)
   useEffect(() => {
-    if (!easterEggReady || showMatrix) return; // Don't run if not ready or already activated
+    if (!easterEggEnabled || showMatrix) return;
 
-    // 3 seconds: subtle glitch
     const subtleTimer = setTimeout(() => {
       setGlitchLevel(1);
-      setTimeout(() => setGlitchLevel(0), 300); // Glitch for 300ms
+      setTimeout(() => setGlitchLevel(0), 300);
     }, 3000);
 
-    // 6 seconds: intense glitch
     const intenseTimer = setTimeout(() => {
       setGlitchLevel(2);
-      setTimeout(() => setGlitchLevel(0), 600); // Glitch for 600ms
+      setTimeout(() => setGlitchLevel(0), 600);
     }, 6000);
 
-    // 12 seconds: full matrix transformation
     const matrixTimer = setTimeout(() => {
       activateMatrix();
     }, 12000);
@@ -110,14 +106,12 @@ export const Home = () => {
       clearTimeout(intenseTimer);
       clearTimeout(matrixTimer);
     };
-  }, [easterEggReady, showMatrix]);
+  }, [easterEggEnabled, showMatrix]);
 
   const handleImageClick = () => {
-    if (!easterEggReady || showMatrix) return; // Only work if ready and not already activated
-
+    if (!easterEggEnabled || showMatrix) return;
     const newCount = tapCount + 1;
     setTapCount(newCount);
-
     if (newCount >= 5) {
       activateMatrix();
       setTapCount(0);
@@ -125,12 +119,8 @@ export const Home = () => {
   };
 
   const handleTouchStart = () => {
-    if (!easterEggReady || showMatrix) return; // Only work if ready and not already activated
-
-    const timer = setTimeout(() => {
-      activateMatrix();
-    }, 2500);
-
+    if (!easterEggEnabled || showMatrix) return;
+    const timer = setTimeout(() => activateMatrix(), 2500);
     setLongPressTimer(timer);
   };
 
@@ -176,20 +166,36 @@ export const Home = () => {
 
           <div className="image-section">
             {showMatrix ? (
-              <MatrixImage
-                className={getGlitchClass()}
-                alt="Stephen Montana - 3D rendered portrait of a full stack developer in the matrix."
-                fetchpriority="high"
-                loading="eager"
-                width="400"
-                height="400"
-                sizes="(max-width: 640px) 340px, (max-width: 1024px) 400px, 510px"
-                onClick={handleImageClick}
-                onTouchStart={handleTouchStart}
-                onTouchEnd={handleTouchEnd}
-                onTouchCancel={handleTouchEnd}
-                style={{ cursor: 'default', userSelect: 'none' }}
-              />
+              <Suspense
+                fallback={
+                  <ResponsiveImage
+                    baseName="me3d"
+                    className={getGlitchClass()}
+                    alt="Stephen Montana - 3D rendered portrait of a full stack developer"
+                    fetchpriority="high"
+                    loading="eager"
+                    width="340"
+                    height="510"
+                    sizes="(max-width: 640px) 170px, (max-width: 1024px) 340px, 510px"
+                    style={{ cursor: 'default', userSelect: 'none' }}
+                  />
+                }
+              >
+                <MatrixImage
+                  className={getGlitchClass()}
+                  alt="Stephen Montana - 3D rendered portrait of a full stack developer in the matrix."
+                  fetchpriority="high"
+                  loading="eager"
+                  width="400"
+                  height="400"
+                  sizes="(max-width: 640px) 340px, (max-width: 1024px) 400px, 510px"
+                  onClick={handleImageClick}
+                  onTouchStart={handleTouchStart}
+                  onTouchEnd={handleTouchEnd}
+                  onTouchCancel={handleTouchEnd}
+                  style={{ cursor: 'default', userSelect: 'none' }}
+                />
+              </Suspense>
             ) : (
               <ResponsiveImage
                 baseName="me3d"
