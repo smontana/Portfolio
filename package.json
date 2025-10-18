@@ -19,7 +19,8 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build && npm run build:critical",
+    "build": "craco build && npm run build:optimize",
+    "build:optimize": "node scripts/inject-modulepreload.mjs && node scripts/inline-critical-css-simple.mjs",
     "build:critical": "node scripts/inline-critical-css-simple.mjs",
     "build:critical:advanced": "node scripts/inline-critical-css.mjs",
     "build:only": "craco build",
