@@ -41,6 +41,16 @@ module.exports = {
               priority: 20,
               reuseExistingChunk: true,
             },
+            // NEW: Combine all CSS into fewer chunks to reduce network requests
+            // This helps reduce the critical path latency from CSS dependency chains
+            styles: {
+              test: /\.s?css$/,
+              name: 'styles',
+              type: 'css/mini-extract',
+              chunks: 'all',
+              enforce: true,
+              priority: 50, // Highest priority to ensure CSS is combined
+            },
           },
           // Limit async requests for lazy-loaded routes
           maxAsyncRequests: 6,
