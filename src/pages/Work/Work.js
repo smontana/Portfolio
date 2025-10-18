@@ -39,7 +39,7 @@ export const Work = () => {
       <Heading Heading={"my work"} />
       <div
         ref={iconsRef}
-        className={`icons motion-safe ${iconsInView ? 'animate-bar' : ''}`}
+        className={`icons ${iconsInView ? 'animate-bar' : ''}`}
         style={{
           fontSize: "3rem",
           justifyContent: "center",

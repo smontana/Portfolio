@@ -12,10 +12,10 @@ export const Home = () => {
   const [showToggle, setShowToggle] = useState(false);
   const [easterEggReady, setEasterEggReady] = useState(false);
 
-  // Intersection Observer hooks for animations - DISABLED FOR NOW
-  // const [h1Ref, h1InView] = useInView({ threshold: 0.1 });
-  // const [h2Ref, h2InView] = useInView({ threshold: 0.1 });
-  // const [pRef, pInView] = useInView({ threshold: 0.1 });
+  // Intersection Observer hooks for animations
+  const [h1Ref, h1InView] = useInView({ threshold: 0.1 });
+  const [h2Ref, h2InView] = useInView({ threshold: 0.1 });
+  const [pRef, pInView] = useInView({ threshold: 0.1 });
 
   const activateMatrix = () => {
     setShowMatrix(true);
@@ -154,17 +154,17 @@ export const Home = () => {
         className={`home ${showMatrix ? 'matrix-mode' : ''}`}
         role="main"
       >
-        <div className="info-section" style={{ opacity: 1, visibility: 'visible' }}>
-          <h1 style={{ opacity: 1, visibility: 'visible' }}>
+        <div className="info-section">
+          <h1 ref={h1Ref} className={h1InView ? 'animate-slide-spring' : ''}>
             <span className="greeting">Hi, I'm</span>
             <span className="name-container" aria-label="Stephen">
               <StephenSVG />
             </span>
           </h1>
-          <h2 className="subtitle" style={{ opacity: 1, visibility: 'visible' }}>
+          <h2 ref={h2Ref} className={`subtitle ${h2InView ? 'animate-fade' : ''}`}>
             A Full Stack Developer
           </h2>
-          <p className="intro-text" style={{ opacity: 1, visibility: 'visible' }}>
+          <p ref={pRef} className={`intro-text ${pInView ? 'animate-fade' : ''}`}>
             If you're working on something cool,{' '}
             <span className="line-break" aria-hidden="true"><br /></span>
             reach out and let's collaborate!
