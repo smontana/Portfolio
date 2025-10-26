@@ -1,0 +1,269 @@
+@use '../../styles/variables.scss' as *;
+
+
+// Skip link for keyboard navigation (WCAG requirement)
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: $primaryColor;
+  color: black;
+  padding: 8px 16px;
+  text-decoration: none;
+  font-weight: bold;
+  z-index: 200;
+  border-radius: 0 0 4px 0;
+  
+  &:focus {
+    top: 0;
+  }
+}
+
+.navbar {
+  position: sticky;
+  top: -1px;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $backgroundColor;
+  color: white;
+  padding: 1rem;
+  border-bottom: 1px solid #B6FF30;
+
+  h1 {
+    color: $primaryColor;
+  }
+
+  &.active {
+    .menu {
+      display: block;
+    }
+  }
+
+  .navbar-brand {
+    a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.5rem;
+      display: inline-block;
+      padding: 4px; // Adds touch target size
+      display: flex;
+      align-items: center;
+      
+      // Focus indicator for keyboard navigation
+      &:focus {
+        outline: 2px solid $primaryColor;
+        outline-offset: 2px;
+        border-radius: 4px;
+      }
+      
+      &:focus:not(:focus-visible) {
+        outline: none; // Remove outline for mouse users
+      }
+      
+      &:focus-visible {
+        outline: 2px solid $primaryColor;
+        outline-offset: 2px;
+        border-radius: 4px;
+      }
+    }
+  }
+
+  .navbar-menu {
+    display: flex;
+    align-items: center;
+  }
+
+  .menu {
+    align-items: center;
+    list-style: none;
+    display: flex;
+
+    .active-link {
+      color: $primaryColor;
+      font-weight: bold;
+      
+      // Add underline for better indication
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 4px;
+    }
+
+    li {
+      margin-right: 1rem;
+    }
+
+    a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      // Ensure minimum touch target size (24x24px for WCAG 2.2 AA)
+      padding: 8px 12px;
+      display: inline-block;
+      min-height: 24px;
+      min-width: 24px;
+      
+      // Focus indicators
+      &:focus {
+        outline: 2px solid $primaryColor;
+        outline-offset: 2px;
+        border-radius: 4px;
+      }
+      
+      &:focus:not(:focus-visible) {
+        outline: none;
+      }
+      
+      &:focus-visible {
+        outline: 2px solid $primaryColor;
+        outline-offset: 2px;
+        border-radius: 4px;
+      }
+
+      &:hover {
+        color: $primaryColor;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  // Hamburger button (not div) for accessibility
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    // Button reset styles
+    background: none;
+    border: none;
+    color: inherit;
+    font: inherit;
+    // Ensure minimum touch target size (24x24px for WCAG 2.2 AA)
+    padding: 8px;
+    min-width: 44px; // 44px is recommended for mobile touch targets
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    
+    // Focus indicators
+    &:focus {
+      outline: 2px solid $primaryColor;
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+    
+    &:focus:not(:focus-visible) {
+      outline: none;
+    }
+    
+    &:focus-visible {
+      outline: 2px solid $primaryColor;
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+    
+    // Hover state for better feedback
+    &:hover {
+      .bar {
+        background-color: $primaryColor;
+      }
+    }
+
+    &.active {
+      .bar:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
+      }
+
+      .bar:nth-child(2) {
+        opacity: 0;
+      }
+
+      .bar:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
+      }
+    }
+
+    .bar {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 3px 0;
+      transition: 0.4s;
+      pointer-events: none; // Prevent bars from intercepting clicks
+    }
+  }
+
+  @media (max-width: 768px) {
+    .navbar-menu {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .menu {
+      display: none;
+      width: 100%;
+      text-align: center;
+      padding: 1rem 0;
+      background-color: $backgroundColor;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      border-bottom: 1px solid #B6FF30;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+      li {
+        margin: 1rem 0;
+        
+        a {
+          // Larger touch targets on mobile
+          padding: 12px 20px;
+          width: 100%;
+        }
+      }
+    }
+
+    .hamburger {
+      display: flex;
+    }
+  }
+}
+
+button {
+  border: none;
+  border-radius: 5px;
+  color: $buttonText;
+  padding: 12px 28px;
+  background-color: $primaryColor;
+  cursor: pointer;
+  transition: all 0.3s;
+  // Ensure minimum touch target size
+  min-height: 44px;
+  font-weight: bold;
+  
+  // Focus indicators
+  &:focus {
+    outline: 2px solid white;
+    outline-offset: 2px;
+  }
+  
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+  
+  &:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 2px;
+  }
+
+  &:hover {
+    background-color: white;
+    color: $buttonText;
+    transform: scale(1.05);
+  }
+  
+  // Active state for better feedback
+  &:active {
+    transform: scale(0.98);
+  }
+}

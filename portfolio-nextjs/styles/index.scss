@@ -1,0 +1,92 @@
+// Self-hosted Inter font for optimal performance
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: optional; // Prevents layout shift, uses fallback if font not loaded quickly
+  src: url('../../public/assets/fonts/InterVariable.woff2') format('woff2');
+}
+
+$primaryColor : #ADFF2F;
+$primaryHeading : 4.1rem;
+$buttonText: black;
+$backgroundColor: #1b1f22;
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    width: 100%;
+    height: 100%;
+}
+
+html::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    // Optimized font stack with system fonts that closely match Inter's metrics
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    background-color: #1b1f22;
+    color: white;
+    width: 100%;
+    min-height: 100vh;
+}
+
+#root {
+    width: 100%;
+    min-height: 100vh;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+// Global accessibility utility classes
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Skip link for keyboard navigation (if not already added)
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: $primaryColor;
+  color: black;
+  padding: 8px 16px;
+  text-decoration: none;
+  font-weight: bold;
+  z-index: 200;
+  border-radius: 0 0 4px 0;
+  
+  &:focus {
+    top: 0;
+  }
+}
+
+// Reduced motion preferences
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,515 @@
+@use '../styles/variables.scss' as *;
+
+.home {
+  display: flex;
+  width: 100%;
+  padding-inline: 30px;
+  justify-content: space-evenly;
+  align-items: center;
+  min-height: 75vh;
+  gap: 2rem; // Add gap for better spacing
+
+  .info-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+    flex-basis: 25rem;
+    max-width: 600px; // Limit text width for better readability
+
+    h1 {
+      font-size: 4rem;
+      font-size: clamp(2.5rem, 8vw, 4rem); // Responsive font sizing
+      color: white;
+      line-height: 1.1; // Better line height for large text
+
+      .greeting {
+        display: block;
+        font-size: 0.8em; // Relative to h1 size
+        margin-bottom: 0.2em;
+      }
+
+      .name-container {
+        display: block;
+        margin-top: 0.3em;
+        min-height: 72px;
+        height: clamp(56px, 10vw, 72px); // Responsive height
+        line-height: 1;
+        position: relative; // Helps with layout stability
+        
+        // Make the SVG fill the container properly
+        svg {
+          width: auto;
+          height: 100%;
+          max-width: 100%;
+          display: block;
+          object-fit: contain; // Maintains aspect ratio
+          object-position: left center; // Align to left on desktop
+        }
+      }
+    }
+
+    .subtitle {
+      font-weight: 400;
+      font-size: 1.3rem;
+      font-size: clamp(1rem, 3vw, 1.3rem); // Responsive font sizing
+      color: rgba(255, 255, 255, 0.95); // Slightly reduced opacity for hierarchy
+      margin: 0; // Reset default h2 margins
+    }
+
+    .intro-text {
+      font-size: 16px;
+      font-size: clamp(0.95rem, 2.5vw, 1.1rem); // Responsive font sizing
+      line-height: 1.6; // Better line height for readability
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 45ch; // Limit line length for readability
+    }
+
+    // Hide line break on screen readers when text naturally wraps
+    @media (max-width: 700px) {
+      .line-break {
+        display: none;
+      }
+    }
+  }
+
+  .image-section {
+    width: 400px;
+    height: 500px;
+    max-width: 100%;
+
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      // Add subtle border for better definition
+      border: 3px solid rgba($primaryColor, 0.3);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      
+      // Ensure image doesn't exceed container
+      max-width: 100%;
+      max-height: 100%;
+      
+      // Better performance
+      will-change: transform;
+      
+      // Add subtle hover effect for interactivity feedback
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      
+      &:hover {
+        transform: scale(1.02);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+      }
+    }
+  }
+
+  // Ensure all focusable elements have visible focus indicators
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid $primaryColor;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+@media screen and (max-width: 700px){
+  .home {
+    flex-direction: column;
+    align-items: center;
+    min-height: auto; // Let content determine height
+    padding-inline: 20px;
+    padding-block: 2rem;
+    gap: 2rem;
+
+    .info-section {
+      padding: 0;
+      text-align: center; // Center text on mobile
+      align-items: center; // Center child elements
+      max-width: 100%;
+
+      h1 {
+        font-size: clamp(2rem, 10vw, 3rem);
+
+        .greeting {
+          font-size: 0.7em;
+        }
+
+        .name-container {
+          svg {
+            object-position: center center; // Center the SVG on mobile
+            margin: 0 auto; // Ensure it's centered
+          }
+        }
+      }
+
+      .subtitle {
+        font-size: clamp(1rem, 4vw, 1.2rem);
+      }
+      
+      .intro-text {
+        font-size: clamp(0.9rem, 3vw, 1rem);
+        max-width: 100%; // Full width on mobile
+      }
+    }
+
+    .image-section {
+      width: min(80vw, 400px); // Responsive sizing
+      height: min(80vw, 500px);
+      order: -1; // Image first on mobile
+    }
+  }
+
+}
+
+// Support for reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .home {
+    .image-section img {
+      transition: none;
+      
+      &:hover {
+        transform: none;
+      }
+    }
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .home {
+    .info-section {
+      h1 {
+        color: white;
+        text-shadow: none;
+      }
+      
+      .subtitle {
+        color: white;
+        opacity: 1;
+      }
+      
+      .intro-text {
+        color: white;
+        opacity: 1;
+      }
+    }
+    
+    .image-section img {
+      border-width: 5px;
+      border-color: $primaryColor;
+    }
+  }
+}
+
+// Ensure text remains readable at 200% zoom
+@media (min-width: 320px) and (max-width: 1024px) {
+  .home {
+    @supports (font-size: clamp(1rem, 2vw, 1.5rem)) {
+      .info-section {
+        h1 {
+          font-size: clamp(2rem, 8vw, 4rem);
+        }
+        
+        .subtitle {
+          font-size: clamp(1rem, 3vw, 1.3rem);
+        }
+        
+        .intro-text {
+          font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+        }
+      }
+    }
+  }
+}
+
+// Disable animations for users who prefer reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .motion-safe {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+// Subtle glitch (3 seconds) - barely noticeable flicker
+@keyframes glitch-subtle {
+  0%, 100% {
+    transform: translate(0);
+    opacity: 1;
+  }
+  20% {
+    transform: translate(-1px, 0);
+    opacity: 0.95;
+  }
+  40% {
+    transform: translate(1px, 0);
+    opacity: 0.98;
+  }
+  60% {
+    transform: translate(0, -1px);
+    opacity: 0.96;
+  }
+  80% {
+    transform: translate(0, 1px);
+    opacity: 0.97;
+  }
+}
+
+.glitch-subtle {
+  animation: glitch-subtle 0.3s ease-in-out;
+}
+
+// Intense glitch (6 seconds) - obvious Matrix-like corruption
+@keyframes glitch-intense {
+  0%, 100% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+  10% {
+    transform: translate(-3px, 2px);
+    filter: hue-rotate(90deg) saturate(2);
+  }
+  20% {
+    transform: translate(2px, -2px);
+    filter: hue-rotate(180deg) saturate(2);
+  }
+  30% {
+    transform: translate(-2px, 3px);
+    filter: hue-rotate(270deg) saturate(2);
+  }
+  40% {
+    transform: translate(3px, -2px);
+    filter: hue-rotate(0deg) saturate(2) contrast(1.3);
+  }
+  50% {
+    transform: translate(-2px, 2px);
+    filter: hue-rotate(90deg) saturate(2) contrast(1.3);
+  }
+  60% {
+    transform: translate(2px, -3px);
+    filter: hue-rotate(180deg) saturate(2);
+  }
+  70% {
+    transform: translate(-3px, 2px);
+    filter: hue-rotate(270deg) saturate(2);
+  }
+  80% {
+    transform: translate(2px, -1px);
+    filter: hue-rotate(0deg) saturate(1.5);
+  }
+  90% {
+    transform: translate(-1px, 2px);
+    filter: hue-rotate(45deg);
+  }
+}
+
+.glitch-intense {
+  animation: glitch-intense 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+// Matrix mode background
+.home.matrix-mode {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.95) 0%,
+      rgba(0, 20, 0, 0.98) 50%,
+      rgba(0, 0, 0, 0.95) 100%
+    );
+    z-index: -1;
+    animation: matrix-fade-in 1s ease-out;
+  }
+
+  &::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 255, 70, 0.03) 2px,
+        rgba(0, 255, 70, 0.03) 4px
+      );
+    pointer-events: none;
+    z-index: 1;
+    animation: matrix-scan 8s linear infinite;
+  }
+
+  .info-section {
+    position: relative;
+    z-index: 2;
+
+    h1, h2, p {
+      text-shadow: 0 0 10px rgba(0, 255, 70, 0.5);
+      animation: matrix-text-glow 2s ease-in-out infinite alternate;
+    }
+  }
+
+  .image-section {
+    position: relative;
+    z-index: 2;
+
+    img {
+      box-shadow:
+        0 0 20px rgba(0, 255, 70, 0.6),
+        0 0 40px rgba(0, 255, 70, 0.4),
+        0 0 60px rgba(0, 255, 70, 0.2);
+      border-color: rgba(0, 255, 70, 0.8);
+    }
+  }
+}
+
+@keyframes matrix-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes matrix-scan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes matrix-text-glow {
+  from {
+    text-shadow: 0 0 10px rgba(0, 255, 70, 0.5);
+  }
+  to {
+    text-shadow: 0 0 20px rgba(0, 255, 70, 0.8);
+  }
+}
+
+// Reality Mode Toggle Button
+.reality-toggle {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  animation: toggle-slide-in 0.5s ease-out;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  .pill-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pill {
+    width: 24px;
+    height: 12px;
+    border-radius: 12px;
+    position: relative;
+    transition: all 0.3s ease;
+
+    &.red {
+      background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+      animation: pill-glow-red 2s ease-in-out infinite alternate;
+    }
+
+    &.blue {
+      background: linear-gradient(135deg, #0066ff 0%, #0044cc 100%);
+      box-shadow: 0 0 10px rgba(0, 102, 255, 0.5);
+      animation: pill-glow-blue 2s ease-in-out infinite alternate;
+    }
+  }
+
+  .toggle-label {
+    user-select: none;
+  }
+
+  // Focus visible for accessibility
+  &:focus-visible {
+    outline: 2px solid $primaryColor;
+    outline-offset: 2px;
+  }
+}
+
+@keyframes toggle-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pill-glow-red {
+  from {
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+  }
+  to {
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+  }
+}
+
+@keyframes pill-glow-blue {
+  from {
+    box-shadow: 0 0 10px rgba(0, 102, 255, 0.5);
+  }
+  to {
+    box-shadow: 0 0 20px rgba(0, 102, 255, 0.8);
+  }
+}
+
+// Mobile adjustments
+@media screen and (max-width: 700px) {
+  .reality-toggle {
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+    gap: 0.5rem;
+
+    .pill {
+      width: 20px;
+      height: 10px;
+    }
+  }
+}

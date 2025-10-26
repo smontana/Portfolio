@@ -1,0 +1,111 @@
+// Legacy tooltip (from floating-ui) - keeping for reference
+.Tooltip {
+  width: max-content;
+  padding: 0.25rem 0.5rem;
+  background-color: #444;
+  color: white;
+  font-size: 0.9em;
+  border-radius: 4px;
+  z-index: 9999;
+}
+
+// New CSS-only tooltip (no JavaScript needed!)
+.skill-tooltip-wrapper {
+  position: relative;
+  display: inline-flex;
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+
+  // The tooltip itself
+  &::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.25rem 0.5rem;
+    background-color: #444;
+    color: white;
+    font-size: 0.75rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 9999;
+  }
+
+  // Tooltip arrow (points downward, attached to bottom of tooltip)
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #444;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 9999;
+  }
+
+  // Desktop: Show tooltip on hover
+  @media (hover: hover) and (pointer: fine) {
+    &:hover::before,
+    &:hover::after {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    &:hover svg {
+      transform: scale(1.1);
+    }
+  }
+
+  // Mobile/Touch: Show tooltip on focus/active
+  &:focus::before,
+  &:focus::after,
+  &:active::before,
+  &:active::after {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  // Keyboard navigation
+  &:focus-visible {
+    outline: 2px solid #ADFF2F;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  // Icon styles
+  svg {
+    outline: none;
+    transition: transform 0.2s ease;
+    display: block;
+  }
+
+  &:focus svg,
+  &:active svg {
+    transform: scale(1.1);
+  }
+}
+
+// Respect reduced motion preferences
+@media (prefers-reduced-motion: reduce) {
+  .skill-tooltip-wrapper {
+    &::before,
+    &::after {
+      transition: none;
+    }
+
+    svg {
+      transition: none;
+    }
+  }
+}

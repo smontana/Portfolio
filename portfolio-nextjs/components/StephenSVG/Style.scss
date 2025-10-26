@@ -1,0 +1,137 @@
+@use '../../styles/variables.scss' as *;
+
+
+@font-face {
+  font-family: 'studiofeixen-variable';
+  src: url('/assets/fonts/studio-feixen-sans-variable.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.custom-text {
+  font-family: 'studiofeixen-variable', 'studiofeixen', sans-serif;
+  font-size: 72px;
+  fill: #ffffff;
+}
+
+// Container for SVG and controls
+.svg-animation-container {
+  position: relative;
+  width: 100%;
+  
+  svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+// Animation control button
+.animation-control {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+  background-color: rgba($backgroundColor, 0.9);
+  color: $primaryColor;
+  border: 2px solid $primaryColor;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  
+  // Focus styles for keyboard navigation
+  &:focus {
+    outline: 2px solid $primaryColor;
+    outline-offset: 2px;
+  }
+  
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+  
+  &:focus-visible {
+    outline: 2px solid $primaryColor;
+    outline-offset: 2px;
+  }
+  
+  // Hover state
+  &:hover {
+    background-color: $primaryColor;
+    color: $backgroundColor;
+    transform: scale(1.1);
+  }
+  
+  // Active state
+  &:active {
+    transform: scale(0.95);
+  }
+  
+  // High contrast mode support
+  @media (prefers-contrast: high) {
+    border-width: 3px;
+    font-weight: bold;
+  }
+}
+
+// Utility class for screen reader only text
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  // Hide the animation control when motion is reduced
+  .animation-control {
+    display: none;
+  }
+  
+  // Ensure SVG paths are fully visible when animation is disabled
+  .line {
+    stroke-dasharray: none !important;
+    stroke-dashoffset: 0 !important;
+    opacity: 1 !important;
+  }
+}
+
+// Mobile responsiveness
+@media screen and (max-width: 768px) {
+  .animation-control {
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+  }
+}
+
+// Ensure good contrast for SVG strokes
+.line {
+  // Already has good contrast with #B6FF30 on #1b1f22
+  // Adding pointer-events none since these aren't interactive
+  pointer-events: none;
+}
+
+// Print styles - show static version
+@media print {
+  .animation-control {
+    display: none;
+  }
+  
+  .line {
+    stroke-dasharray: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+}
