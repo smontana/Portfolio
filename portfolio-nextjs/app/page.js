@@ -169,6 +169,7 @@ export default function HomePage() {
                 width={400}
                 height={400}
                 priority
+                fetchPriority="high"
                 className={getGlitchClass()}
                 sizes="(max-width: 640px) 340px, (max-width: 1024px) 400px, 510px"
                 onClick={handleImageClick}
@@ -184,6 +185,7 @@ export default function HomePage() {
                 width={340}
                 height={510}
                 priority
+                fetchPriority="high"
                 className={getGlitchClass()}
                 sizes="(max-width: 640px) 170px, (max-width: 1024px) 340px, 510px"
                 onClick={handleImageClick}
