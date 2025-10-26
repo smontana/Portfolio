@@ -53,7 +53,7 @@ export function ResponsiveImage({
         height={height}
         className={className}
         loading={loading}
-        fetchpriority={fetchpriority}
+        fetchPriority={fetchpriority}
         {...props}
       />
     </picture>
@@ -110,7 +110,7 @@ export function MatrixImage({
         height={height}
         className={className}
         loading={loading}
-        fetchpriority={fetchpriority}
+        fetchPriority={fetchpriority}
         {...props}
       />
     </picture>

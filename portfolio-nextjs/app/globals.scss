@@ -79,7 +79,8 @@ a {
   z-index: 200;
   border-radius: 0 0 4px 0;
 
-  &:focus {
+  // Only show on keyboard focus, not programmatic focus
+  &:focus-visible {
     top: 0;
   }
 }

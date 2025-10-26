@@ -1,6 +1,5 @@
 'use client'
 
-import { Navbar } from "@/components/Navbar/Navbar";
 import { Heading, SkillTooltip } from "@/components";
 import { useInView } from "@/hooks/useInView";
 import {
@@ -25,9 +24,7 @@ export default function AboutPage() {
   const [skillsRef, skillsInView] = useInView({ threshold: 0.1 });
 
   return (
-    <>
-      <Navbar />
-      <main id="main-content" className="about">
+    <main id="main-content" className="about">
         <Heading Heading={"About me"} />
         <div className="info">
           <p ref={pRef} className={pInView ? 'animate-fade' : ''}>
@@ -60,7 +57,6 @@ export default function AboutPage() {
             <SkillTooltip Icon={BiLogoMongodb} color="green" label="MongoDB" />
           </div>
         </div>
-      </main>
-    </>
+    </main>
   );
 }

@@ -1,4 +1,5 @@
 import { Analytics } from '@vercel/analytics/react'
+import { Navbar } from '@/components/Navbar/Navbar'
 import { inter } from './fonts'
 import './globals.scss'
 
@@ -27,6 +28,7 @@ export default function RootLayout({ children }) {
         <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
       </head>
       <body>
+        <Navbar />
         {children}
         <Analytics />
       </body>

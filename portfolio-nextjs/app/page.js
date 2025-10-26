@@ -1,6 +1,5 @@
 'use client'
 
-import { Navbar } from "@/components/Navbar/Navbar";
 import { Socials, StephenSVG, ResponsiveImage } from "@/components";
 import { useInView } from "@/hooks/useInView";
 import { useState, useEffect, lazy, Suspense } from "react";
@@ -141,13 +140,11 @@ export default function HomePage() {
   };
 
   return (
-    <>
-      <Navbar />
-      <main
-        id="main-content"
-        className={`home ${showMatrix ? 'matrix-mode' : ''}`}
-        role="main"
-      >
+    <main
+      id="main-content"
+      className={`home ${showMatrix ? 'matrix-mode' : ''}`}
+      role="main"
+    >
         <div className="info-section">
           <h1 ref={h1Ref} className={h1InView ? 'animate-slide-spring' : ''}>
             <span className="greeting">Hi, I'm</span>
@@ -235,7 +232,6 @@ export default function HomePage() {
               </span>
             </button>
           )}
-      </main>
-    </>
+    </main>
   );
 }

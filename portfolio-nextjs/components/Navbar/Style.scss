@@ -1,24 +1,5 @@
 @use '../../styles/variables.scss' as *;
 
-
-// Skip link for keyboard navigation (WCAG requirement)
-.skip-link {
-  position: absolute;
-  top: -40px;
-  left: 0;
-  background: $primaryColor;
-  color: black;
-  padding: 8px 16px;
-  text-decoration: none;
-  font-weight: bold;
-  z-index: 200;
-  border-radius: 0 0 4px 0;
-  
-  &:focus {
-    top: 0;
-  }
-}
-
 .navbar {
   position: sticky;
   top: -1px;
