@@ -1,15 +1,11 @@
 'use client'
 
-import { Socials, StephenSVG, ResponsiveImage } from "@/components";
+import { Socials, StephenSVG } from "@/components";
 import { useInView } from "@/hooks/useInView";
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useState, useEffect } from "react";
+import Image from "next/image";
 import "./page.scss";
 import "../styles/animations/animations.css";
-
-// Lazy load MatrixImage - only loads when easter egg is activated
-const MatrixImage = lazy(() =>
-  import("@/components").then(module => ({ default: module.MatrixImage }))
-);
 
 export default function HomePage() {
   // Intersection Observer hooks for animations
@@ -167,45 +163,28 @@ export default function HomePage() {
 
           <div className="image-section">
             {showMatrix ? (
-              <Suspense
-                fallback={
-                  <ResponsiveImage
-                    baseName="me3d"
-                    className={getGlitchClass()}
-                    alt="Stephen Montana - 3D rendered portrait of a full stack developer"
-                    fetchpriority="high"
-                    loading="eager"
-                    width="340"
-                    height="510"
-                    sizes="(max-width: 640px) 170px, (max-width: 1024px) 340px, 510px"
-                    style={{ cursor: 'default', userSelect: 'none' }}
-                  />
-                }
-              >
-                <MatrixImage
-                  className={getGlitchClass()}
-                  alt="Stephen Montana - 3D rendered portrait of a full stack developer in the matrix."
-                  fetchpriority="high"
-                  loading="eager"
-                  width="400"
-                  height="400"
-                  sizes="(max-width: 640px) 340px, (max-width: 1024px) 400px, 510px"
-                  onClick={handleImageClick}
-                  onTouchStart={handleTouchStart}
-                  onTouchEnd={handleTouchEnd}
-                  onTouchCancel={handleTouchEnd}
-                  style={{ cursor: 'default', userSelect: 'none' }}
-                />
-              </Suspense>
-            ) : (
-              <ResponsiveImage
-                baseName="me3d"
+              <Image
+                src="/assets/images/responsive/matrix-md.avif"
+                alt="Stephen Montana - 3D rendered portrait of a full stack developer in the matrix."
+                width={400}
+                height={400}
+                priority
                 className={getGlitchClass()}
+                sizes="(max-width: 640px) 340px, (max-width: 1024px) 400px, 510px"
+                onClick={handleImageClick}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+                onTouchCancel={handleTouchEnd}
+                style={{ cursor: 'default', userSelect: 'none' }}
+              />
+            ) : (
+              <Image
+                src="/assets/images/responsive/me3d-md.avif"
                 alt="Stephen Montana - 3D rendered portrait of a full stack developer"
-                fetchpriority="high"
-                loading="eager"
-                width="340"
-                height="510"
+                width={340}
+                height={510}
+                priority
+                className={getGlitchClass()}
                 sizes="(max-width: 640px) 170px, (max-width: 1024px) 340px, 510px"
                 onClick={handleImageClick}
                 onTouchStart={handleTouchStart}
