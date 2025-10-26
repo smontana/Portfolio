@@ -1,11 +1,18 @@
 'use client'
 
-import { Socials, StephenSVG } from "@/components";
+import dynamic from "next/dynamic";
+import { StephenSVG } from "@/components";
 import { useInView } from "@/hooks/useInView";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import "./page.scss";
 import "../styles/animations/animations.css";
+
+// Lazy load non-critical components
+const Socials = dynamic(() => import("@/components/Socials/Socials").then(mod => ({ default: mod.Socials })), {
+  ssr: true,
+  loading: () => <div style={{ height: '48px' }} />
+});
 
 export default function HomePage() {
   // Intersection Observer hooks for animations

@@ -1,6 +1,7 @@
 'use client'
 
-import { Heading, SkillTooltip } from "@/components";
+import dynamic from "next/dynamic";
+import { Heading } from "@/components";
 import { useInView } from "@/hooks/useInView";
 import {
   BiLogoJavascript,
@@ -18,6 +19,11 @@ import { SiExpress, SiTailwindcss } from "react-icons/si";
 import { TbBrandFramerMotion } from "react-icons/tb";
 import "./page.scss";
 import "../../styles/animations/animations.css";
+
+// Lazy load SkillTooltip (not immediately visible)
+const SkillTooltip = dynamic(() => import("@/components/TooltipElement/SkillTooltip").then(mod => ({ default: mod.SkillTooltip })), {
+  ssr: true
+});
 
 export default function AboutPage() {
   const [pRef, pInView] = useInView({ threshold: 0.1 });
