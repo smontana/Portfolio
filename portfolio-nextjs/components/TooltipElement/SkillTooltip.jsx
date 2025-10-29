@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import {
   useFloating,
   autoUpdate,
@@ -12,6 +12,7 @@ import {
   useDismiss,
   useRole,
   useInteractions,
+  useClick,
   FloatingPortal
 } from "@floating-ui/react";
 import "./Style.scss";
@@ -34,15 +35,26 @@ export function SkillTooltip({ Icon, color, label }) {
     ]
   });
 
+  // Detect if device supports touch (coarse pointer = touch device)
+  const isTouchDevice = useMemo(
+    () => window.matchMedia("(pointer: coarse)").matches,
+    []
+  );
+
   // Event listeners to change the open state
-  const hover = useHover(context, { move: false });
-  const focus = useFocus(context);
-  const dismiss = useDismiss(context);
+  // On touch: use click interaction only
+  // On mouse/keyboard: use hover + focus
+  const click = useClick(context, { enabled: isTouchDevice });
+  const hover = useHover(context, { move: false, enabled: !isTouchDevice });
+  const focus = useFocus(context, { enabled: !isTouchDevice });
+  // Prevent dismissing on reference press to avoid the blink bug
+  const dismiss = useDismiss(context, { referencePress: false });
   // Role props for screen readers
   const role = useRole(context, { role: "tooltip" });
 
   // Merge all the interactions into prop getters
   const { getReferenceProps, getFloatingProps } = useInteractions([
+    click,
     hover,
     focus,
     dismiss,
@@ -58,6 +70,7 @@ export function SkillTooltip({ Icon, color, label }) {
         {isOpen && (
           <div
             className="Tooltip"
+            // eslint-disable-next-line react-hooks/refs
             ref={refs.setFloating}
             style={floatingStyles}
             {...getFloatingProps()}
