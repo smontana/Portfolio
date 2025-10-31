@@ -27,6 +27,33 @@
             justify-content: center;
             width: 100%;
         }
+
+        // Loading skeleton for lazy-loaded icons
+        .icons-loading {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .icon-skeleton {
+            width: 64px;
+            height: 64px;
+            border-radius: 8px;
+            background: linear-gradient(90deg, #2a2e33 25%, #3a3e43 50%, #2a2e33 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s ease-in-out infinite;
+        }
+
+        @keyframes skeleton-loading {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
     }
 }
 

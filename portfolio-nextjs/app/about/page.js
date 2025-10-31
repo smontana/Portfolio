@@ -1,23 +1,23 @@
 'use client'
 
-import { Heading, SkillTooltip } from "@/components";
+import dynamic from 'next/dynamic';
+import { Heading } from "@/components";
 import { useInView } from "@/hooks/useInView";
-import {
-  BiLogoJavascript,
-  BiLogoTypescript,
-  BiLogoReact,
-  BiLogoGraphql,
-  BiLogoSass,
-  BiLogoNodejs,
-  BiLogoGoLang,
-  BiLogoPostgresql,
-  BiLogoMongodb
-} from "react-icons/bi";
-import { DiAngularSimple, DiDotnet, DiMsqlServer, DiMysql } from "react-icons/di";
-import { SiExpress, SiTailwindcss } from "react-icons/si";
-import { TbBrandFramerMotion } from "react-icons/tb";
 import "./page.scss";
 import "../../styles/animations/animations.css";
+
+// Lazy load the skill icons (16 react-icons) - only loads when about page is visited
+const SkillIcons = dynamic(() => import('./SkillIcons'), {
+  loading: () => (
+    <div className="icons-loading" aria-live="polite" aria-busy="true">
+      {/* Placeholder skeletons for 16 icons */}
+      {Array.from({ length: 16 }).map((_, i) => (
+        <div key={i} className="icon-skeleton" />
+      ))}
+    </div>
+  ),
+  ssr: false, // Don't include in server bundle
+});
 
 export default function AboutPage() {
   const [pRef, pInView] = useInView({ threshold: 0.1 });
@@ -39,22 +39,7 @@ export default function AboutPage() {
         <div ref={skillsRef} className={`skills ${skillsInView ? 'animate-fade' : ''}`}>
           <h2>Skilled at : </h2>
           <div className="icons">
-            <SkillTooltip Icon={BiLogoJavascript} color="yellow" label="JavaScript" />
-            <SkillTooltip Icon={BiLogoTypescript} color="#3178c6" label="TypeScript" />
-            <SkillTooltip Icon={BiLogoReact} color="deepskyblue" label="React" />
-            <SkillTooltip Icon={DiAngularSimple} color="red" label="Angular" />
-            <SkillTooltip Icon={TbBrandFramerMotion} color="hotpink" label="Framer Motion" />
-            <SkillTooltip Icon={BiLogoGraphql} color="#e535ab" label="GraphQL" />
-            <SkillTooltip Icon={BiLogoSass} color="#cc6699" label="Sass" />
-            <SkillTooltip Icon={SiTailwindcss} color="skyblue" label="Tailwind CSS" />
-            <SkillTooltip Icon={BiLogoNodejs} color="greenyellow" label="Node.js" />
-            <SkillTooltip Icon={SiExpress} color="white" label="Express.js" />
-            <SkillTooltip Icon={BiLogoGoLang} color="deepskyblue" label="Golang" />
-            <SkillTooltip Icon={BiLogoPostgresql} color="skyblue" label="PostgreSQL" />
-            <SkillTooltip Icon={DiMsqlServer} color="red" label="SQL Server" />
-            <SkillTooltip Icon={DiMysql} color="skyblue" label="MySQL" />
-            <SkillTooltip Icon={DiDotnet} color="blueviolet" label=".NET" />
-            <SkillTooltip Icon={BiLogoMongodb} color="green" label="MongoDB" />
+            <SkillIcons />
           </div>
         </div>
     </main>
