@@ -86,7 +86,7 @@ export const StephenSVG = () => {
     >
         {/* Title and description for screen readers */}
         <title>Stephen</title>
-        <desc>Animated drawing of the name "Stephen" in stylized lettering</desc>
+        <desc>Animated drawing of the name &quot;Stephen&quot; in stylized lettering</desc>
         <g id='stephen-word'>
             <path
                 className='line'
