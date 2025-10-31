@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/react'
 import { Navbar } from '@/components/Navbar/Navbar'
 import { inter } from './fonts'
+import './critical.css'  // Critical CSS loaded first
 import './globals.scss'
 
 export const metadata = {
@@ -23,8 +24,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={inter.variable}>
       <head>
-        {/* Preconnect to external domains */}
-        <link rel="preconnect" href="https://vitals.vercel-insights.com" crossOrigin="anonymous" />
+        {/* Preload critical hero image */}
+        <link
+          rel="preload"
+          as="image"
+          href="/assets/images/responsive/me3d-md.avif"
+          type="image/avif"
+        />
+        {/* Preconnect to external domains for analytics */}
+        <link rel="preconnect" href="https://vitals.vercel-insights.com" />
         <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
       </head>
       <body>
