@@ -2,15 +2,15 @@
 
 .navbar {
   position: sticky;
-  top: -1px;
+  top: -1px; // This prevents layout shift!
   z-index: 100;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: $backgroundColor;
   color: white;
-  // padding: 0.5rem;
-  padding: 1rem;
+  padding: 0.5rem 1rem; // Less vertical padding
+  min-height: 61px; // help prevent layout shift
   border-bottom: 1px solid #B6FF30;
 
   h1 {
