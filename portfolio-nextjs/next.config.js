@@ -12,6 +12,15 @@ const nextConfig = {
   // Add compression
   compress: true,
 
+  // Remove X-Powered-By header for security
+  poweredByHeader: false,
+
+  // Generate ETags for better caching
+  generateEtags: true,
+
+  // Type-safe routing
+  typedRoutes: true,
+
   // Set output file tracing root to this directory (silences multiple lockfile warning)
   outputFileTracingRoot: __dirname,
 
@@ -20,6 +29,9 @@ const nextConfig = {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [170, 340, 400, 510, 640, 768, 1024, 1280],
     imageSizes: [16, 32, 48, 64, 96, 128, 192, 256, 384],
+    minimumCacheTTL: 60, // Cache optimized images for 60 seconds minimum
+    dangerouslyAllowSVG: true, // Allow SVG images
+    contentDispositionType: 'attachment', // Security for SVGs
   },
 
   // Compiler options
@@ -31,8 +43,31 @@ const nextConfig = {
 
   // Experimental features for better performance
   experimental: {
+    // Optimize CSS delivery
     optimizeCss: true,
+
+    // Inline critical CSS automatically
+    inlineCss: true,
+
+    // Optimize package imports for better tree-shaking
     optimizePackageImports: ['react-icons', 'animejs', '@vercel/analytics'],
+
+    // Optimize React server rendering
+    optimizeServerReact: true,
+
+    // Enable server actions with size limit
+    serverActions: {
+      bodySizeLimit: '2mb',
+    },
+
+    // Optimize memory usage during builds
+    memoryBasedWorkersCount: true,
+
+    // Use light client-side router instead of full router
+    clientRouterFilter: true,
+
+    // Optimize CSS modules (strict for maximum optimization)
+    cssChunking: 'strict',
   },
 
   // Headers for security (replicate your current CSP)
