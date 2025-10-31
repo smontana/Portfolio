@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import "./Style.scss";
 
 export const Loader = () => {
@@ -10,7 +11,7 @@ export const LoadMore = ({ heading, image, onClick }) => {
   return (
     <div className="LoadMore card" onClick={onClick}>
       <div>
-        <img src={image} alt={heading} />
+        <Image src={image} alt={heading} layout="responsive" />
       </div>
       <div>
         <h3>{heading}</h3>
