@@ -2,14 +2,13 @@
 
 .navbar {
   position: sticky;
-  top: -1px;
   z-index: 100;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: $backgroundColor;
   color: white;
-  padding: 1rem;
+  padding: 0.5rem;
   border-bottom: 1px solid #B6FF30;
 
   h1 {
