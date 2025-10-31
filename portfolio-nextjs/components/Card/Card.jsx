@@ -1,9 +1,10 @@
 'use client'
 
 import { useState } from "react";
-import "./Style.scss";
-import { AiFillGithub } from "react-icons/ai";
+import Image from 'next/image'
 import { Loader } from "..";
+import { AiFillGithub } from "react-icons/ai";
+import "./Style.scss";
 
 export const Card = ({ heading, image, url, github }) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
@@ -17,7 +18,7 @@ export const Card = ({ heading, image, url, github }) => {
       <div className="image-section">
         {!isImageLoaded && <Loader />}
         <a href={url} target="_blank" rel="noreferrer">
-          <img
+          <Image
             className={`${isImageLoaded ? "loaded" : ""}`}
             src={image}
             alt=""
