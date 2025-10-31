@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import { Heading } from "@/components";
 import { useInView } from "@/hooks/useInView";
 import "./page.scss";
-import "../../styles/animations/animations.css";
+import "../../styles/animations/critical.css";
 
 // Lazy load the skill icons (16 react-icons) - only loads when about page is visited
 const SkillIcons = dynamic(() => import('./SkillIcons'), {

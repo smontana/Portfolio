@@ -5,7 +5,7 @@ import { useInView } from "@/hooks/useInView";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import "./page.scss";
-import "../styles/animations/animations.css";
+import "../styles/animations/critical.css";
 
 export default function HomePage() {
   // Intersection Observer hooks for animations
@@ -143,7 +143,7 @@ export default function HomePage() {
     >
         <div className="info-section">
           <h1 ref={h1Ref} className={h1InView ? 'animate-slide-spring' : ''}>
-            <span className="greeting">Hi, I'm</span>
+            <span className="greeting">Hi, I&apos;m</span>
             <span className="name-container" aria-label="Stephen">
               <StephenSVG />
             </span>
@@ -152,9 +152,9 @@ export default function HomePage() {
             A Full Stack Developer
           </h2>
           <p ref={pRef} className={`intro-text ${pInView ? 'animate-fade' : ''}`}>
-            If you're working on something cool,{' '}
+            If you&apos;re working on something cool,{' '}
             <span className="line-break" aria-hidden="true"><br /></span>
-            reach out and let's collaborate!
+            reach out and let&apos;s collaborate!
           </p>
           <div aria-label="Connect with me on social media">
             <Socials />
