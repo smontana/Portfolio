@@ -24,7 +24,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={inter.variable}>
       <head>
-        {/* Next.js Image component with priority prop handles preloading automatically */}
+        {/* Preload critical hero image with highest priority for LCP optimization */}
+        <link
+          rel="preload"
+          as="image"
+          href="/assets/images/responsive/me3d-md.avif"
+          type="image/avif"
+          fetchPriority="high"
+          imageSrcSet="/assets/images/responsive/me3d-md.avif 1x"
+        />
 
         {/* Preconnect to external domains for analytics */}
         <link rel="preconnect" href="https://vitals.vercel-insights.com" />
