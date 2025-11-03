@@ -34,21 +34,12 @@ export default function RootLayout({ children }) {
           fetchPriority="high"
         />
 
-        {/* Preload critical hero images (responsive) with highest priority for LCP optimization */}
-        <link
-          rel="preload"
-          as="image"
-          href="/assets/images/responsive/me3d-sm.avif"
-          type="image/avif"
-          media="(max-width: 640px)"
-          fetchPriority="high"
-        />
+        {/* Preload critical hero image with highest priority for LCP optimization */}
         <link
           rel="preload"
           as="image"
           href="/assets/images/responsive/me3d-md.avif"
           type="image/avif"
-          media="(min-width: 641px)"
           fetchPriority="high"
         />
 

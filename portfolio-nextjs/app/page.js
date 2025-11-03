@@ -171,7 +171,7 @@ export default function HomePage() {
                 />
               ) : (
                 <Image
-                  src="/assets/images/responsive/me3d-sm.avif"
+                  src="/assets/images/responsive/me3d-md.avif"
                   alt="Stephen Montana - 3D rendered portrait of a full stack developer"
                   width={340}
                   height={510}
@@ -184,7 +184,6 @@ export default function HomePage() {
                   onTouchEnd={handleTouchEnd}
                   onTouchCancel={handleTouchEnd}
                   style={{ cursor: 'pointer', userSelect: 'none' }}
-                  srcSet="/assets/images/responsive/me3d-sm.avif 340w, /assets/images/responsive/me3d-md.avif 510w"
                 />
               )}
             </div>
