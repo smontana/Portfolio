@@ -38,7 +38,7 @@ a{text-decoration:none;color:#fff}
 .icons svg{width:28px;height:28px}
 
 /* Fonts - Critical */
-@font-face{font-family:'studiofeixen-variable';src:url('/assets/fonts/studio-feixen-sans-variable.woff2') format('woff2');font-weight:normal;font-style:normal;font-display:swap}
+@font-face{font-family:'studiofeixen-variable';src:url('/assets/fonts/studio-feixen-sans-variable.woff2') format('woff2');font-weight:normal;font-style:normal;font-display:optional}
 .custom-text{font-family:'studiofeixen-variable','studiofeixen',sans-serif;font-size:72px;fill:#fff}
 
 .svg-animation-container{position:relative;width:100%}

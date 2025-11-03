@@ -24,14 +24,39 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={inter.variable}>
       <head>
-        {/* Preload critical hero image with highest priority for LCP optimization */}
+        {/* Preload critical fonts for text rendering */}
+        <link
+          rel="preload"
+          as="font"
+          href="/assets/fonts/InterVariable.woff2"
+          type="font/woff2"
+          crossOrigin="anonymous"
+          fetchPriority="high"
+        />
+        <link
+          rel="preload"
+          as="font"
+          href="/assets/fonts/studio-feixen-sans-variable.woff2"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+
+        {/* Preload critical hero images (responsive) with highest priority for LCP optimization */}
+        <link
+          rel="preload"
+          as="image"
+          href="/assets/images/responsive/me3d-sm.avif"
+          type="image/avif"
+          media="(max-width: 640px)"
+          fetchPriority="high"
+        />
         <link
           rel="preload"
           as="image"
           href="/assets/images/responsive/me3d-md.avif"
           type="image/avif"
+          media="(min-width: 641px)"
           fetchPriority="high"
-          imageSrcSet="/assets/images/responsive/me3d-md.avif 1x"
         />
 
         {/* Preconnect to external domains for analytics */}
