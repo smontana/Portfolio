@@ -38,8 +38,7 @@ a{text-decoration:none;color:#fff}
 .icons svg{width:28px;height:28px}
 
 /* Fonts - Critical */
-@font-face{font-family:'studiofeixen-variable';src:url('/assets/fonts/studio-feixen-sans-variable.woff2') format('woff2');font-weight:normal;font-style:normal;font-display:optional}
-.custom-text{font-family:'studiofeixen-variable','studiofeixen',sans-serif;font-size:72px;fill:#fff}
+.custom-text{font-family:var(--font-inter),-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;font-size:72px;fill:#fff;font-weight:600}
 
 .svg-animation-container{position:relative;width:100%}
 .svg-animation-container svg{width:100%;height:auto;display:block}

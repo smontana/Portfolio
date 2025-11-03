@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={inter.variable}>
       <head>
-        {/* Preload critical fonts for text rendering */}
+        {/* Preload critical font for text rendering */}
         <link
           rel="preload"
           as="font"
@@ -32,13 +32,6 @@ export default function RootLayout({ children }) {
           type="font/woff2"
           crossOrigin="anonymous"
           fetchPriority="high"
-        />
-        <link
-          rel="preload"
-          as="font"
-          href="/assets/fonts/studio-feixen-sans-variable.woff2"
-          type="font/woff2"
-          crossOrigin="anonymous"
         />
 
         {/* Preload critical hero images (responsive) with highest priority for LCP optimization */}
