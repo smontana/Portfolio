@@ -44,37 +44,17 @@ export default function HomePage() {
   useEffect(() => {
     const initEasterEgg = () => {
       setEasterEggEnabled(true);
-
-      // Setup console commands
-      window.redpill = activateMatrix;
-      window['red-pill'] = activateMatrix;
-      window.red_pill = activateMatrix;
-      window['red pill'] = activateMatrix;
-      window.red = activateMatrix;
-      window.r = activateMatrix;
     };
 
     if ('requestIdleCallback' in window) {
       const idleCallback = window.requestIdleCallback(initEasterEgg, { timeout: 2000 });
       return () => {
         window.cancelIdleCallback(idleCallback);
-        delete window.redpill;
-        delete window['red-pill'];
-        delete window.red_pill;
-        delete window['red pill'];
-        delete window.red;
-        delete window.r;
       };
     } else {
       const timer = setTimeout(initEasterEgg, 1000);
       return () => {
         clearTimeout(timer);
-        delete window.redpill;
-        delete window['red-pill'];
-        delete window.red_pill;
-        delete window['red pill'];
-        delete window.red;
-        delete window.r;
       };
     }
   }, []);
