@@ -159,8 +159,7 @@ export default function HomePage() {
                   alt="Stephen Montana - 3D rendered portrait of a full stack developer in the matrix."
                   width={400}
                   height={400}
-                  priority
-                  fetchPriority="high"
+                  loading="eager"
                   className={getGlitchClass()}
                   sizes="(max-width: 640px) 340px, (max-width: 1024px) 400px, 510px"
                   onClick={handleImageClick}
