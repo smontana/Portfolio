@@ -15,8 +15,9 @@ function pick(...args) {
 function getChar() {
   return String.fromCharCode(pick(
     random(0x3041, 0x30ff),  // Hiragana/Katakana
-    random(0x2000, 0x206f),  // General punctuation
-    random(0x0020, 0x003f)   // Basic Latin
+    random(0x30A0, 0x30FF),  // Katakana (additional range for more variety)
+    random(0x0021, 0x002F),  // Basic punctuation (! to /)
+    random(0x003A, 0x0040)   // More punctuation (: to @)
   ));
 }
 
