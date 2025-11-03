@@ -158,19 +158,40 @@ export function MatrixRain({ columns = 50, rowsPerColumn = 50 }) {
   useEffect(() => {
     if (!containerRef.current) return;
 
-    // Create rain columns
     const container = containerRef.current;
+    let cancelCreation = false;
 
-    for (let i = 0; i < columns; ++i) {
-      const rain = new Rain({
-        target: container,
-        row: rowsPerColumn
-      });
-      rainsRef.current.push(rain);
-    }
+    // Create rain columns progressively to avoid blocking main thread
+    const createColumnsProgressively = async () => {
+      const BATCH_SIZE = 10; // Create 10 columns at a time
+
+      for (let i = 0; i < columns; i += BATCH_SIZE) {
+        if (cancelCreation) break;
+
+        // Create a batch of columns
+        const batchEnd = Math.min(i + BATCH_SIZE, columns);
+        for (let j = i; j < batchEnd; ++j) {
+          if (cancelCreation) break;
+
+          const rain = new Rain({
+            target: container,
+            row: rowsPerColumn
+          });
+          rainsRef.current.push(rain);
+        }
+
+        // Yield to browser between batches (except for last batch)
+        if (batchEnd < columns) {
+          await new Promise(resolve => setTimeout(resolve, 0));
+        }
+      }
+    };
+
+    createColumnsProgressively();
 
     // Cleanup function
     return () => {
+      cancelCreation = true;
       rainsRef.current.forEach(rain => rain.destroy());
       rainsRef.current = [];
     };
