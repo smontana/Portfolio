@@ -1,11 +1,18 @@
 'use client'
 
+import dynamic from 'next/dynamic';
 import { Socials, StephenSVG } from "@/components";
 import { useInView } from "@/hooks/useInView";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import "./page.scss";
 import "../styles/animations/critical.css";
+
+// Lazy load MatrixRain only when matrix mode activates
+const MatrixRain = dynamic(
+  () => import('@/components/MatrixRain/MatrixRain').then(mod => ({ default: mod.MatrixRain })),
+  { ssr: false }
+);
 
 export default function HomePage() {
   // Intersection Observer hooks for animations
@@ -141,6 +148,9 @@ export default function HomePage() {
       className={`home ${showMatrix ? 'matrix-mode' : ''}`}
       role="main"
     >
+        {/* Matrix rain effect - only renders when showMatrix is true */}
+        {showMatrix && <MatrixRain columns={50} rowsPerColumn={50} />}
+
         <div className="info-section">
           <h1 ref={h1Ref} className={h1InView ? 'animate-slide-spring' : ''}>
             <span className="greeting">Hi, I&apos;m</span>
