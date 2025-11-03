@@ -12,13 +12,16 @@ function pick(...args) {
   return args[random(0, args.length - 1)];
 }
 
+// Authentic Matrix characters (as seen in the movie)
+const MATRIX_CHARS = [
+  'ラ', 'ド', 'ク', 'リ', 'フ', 'マ', 'ラ', 'ソ', 'ン',
+  'わ', 'た', 'し', 'ワ', 'タ', 'シ', 'ん', 'ょ', 'ン', 'ョ',
+  'た', 'ば', 'こ', 'タ', 'バ', 'コ',
+  'と', 'う', 'き', 'ょ', 'う', 'ト', 'ウ', 'キ', 'ョ', 'ウ'
+];
+
 function getChar() {
-  return String.fromCharCode(pick(
-    random(0x3041, 0x30ff),  // Hiragana/Katakana
-    random(0x30A0, 0x30FF),  // Katakana (additional range for more variety)
-    random(0x0021, 0x002F),  // Basic punctuation (! to /)
-    random(0x003A, 0x0040)   // More punctuation (: to @)
-  ));
+  return MATRIX_CHARS[random(0, MATRIX_CHARS.length - 1)];
 }
 
 function loop(fn, delay) {
