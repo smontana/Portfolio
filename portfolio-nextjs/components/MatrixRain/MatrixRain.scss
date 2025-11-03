@@ -1,3 +1,12 @@
+@use "sass:color";
+
+// Matrix styling variables
+$matrix-font-size: 18px;
+$matrix-line-height: 24px;
+$matrix-color: color.scale(green, $lightness: 66.7539267016%);
+$matrix-width: 32px;
+$matrix-height: 24px;
+
 .matrix-rain-container {
   position: fixed;
   top: 0;
@@ -17,10 +26,11 @@
 
   span {
     display: block;
-    width: 2vmax;
-    height: 2vmax;
-    font-size: 2vmax;
-    color: #9bff9b11;
+    width: $matrix-width;
+    height: $matrix-height;
+    font-size: $matrix-font-size;
+    line-height: $matrix-line-height;
+    color: rgba($matrix-color, 0.1);
     text-align: center;
     font-family: "Helvetica Neue", Helvetica, sans-serif;
     font-weight: 300;
@@ -42,9 +52,10 @@
 @media screen and (max-width: 768px) {
   .matrix-rain-container {
     span {
-      width: 3vmax;
-      height: 3vmax;
-      font-size: 3vmax;
+      width: 24px;
+      height: 20px;
+      font-size: 16px;
+      line-height: 20px;
     }
   }
 }

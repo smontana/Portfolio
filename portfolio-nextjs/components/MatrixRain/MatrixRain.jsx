@@ -8,10 +8,6 @@ function random(from, to) {
   return ~~(Math.random() * (to - from + 1) + from);
 }
 
-function pick(...args) {
-  return args[random(0, args.length - 1)];
-}
-
 // Authentic Matrix characters (as seen in the movie)
 const MATRIX_CHARS = [
   'ラ', 'ド', 'ク', 'リ', 'フ', 'マ', 'ラ', 'ソ', 'ン',
