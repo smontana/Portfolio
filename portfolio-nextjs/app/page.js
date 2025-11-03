@@ -143,86 +143,88 @@ export default function HomePage() {
   };
 
   return (
-    <main
-      id="main-content"
-      className={`home ${showMatrix ? 'matrix-mode' : ''}`}
-      role="main"
-    >
-        {/* Matrix rain effect - only renders when showMatrix is true */}
-        {showMatrix && <MatrixRain columns={50} rowsPerColumn={50} />}
+    <>
+      <main
+        id="main-content"
+        className={`home ${showMatrix ? 'matrix-mode' : ''}`}
+        role="main"
+      >
+          {/* Matrix rain effect - only renders when showMatrix is true */}
+          {showMatrix && <MatrixRain columns={50} rowsPerColumn={50} />}
 
-        <div className="info-section">
-          <h1 ref={h1Ref} className={h1InView ? 'animate-slide-spring' : ''}>
-            <span className="greeting">Hi, I&apos;m</span>
-            <span className="name-container" aria-label="Stephen">
-              <StephenSVG />
-            </span>
-          </h1>
-          <h2 ref={h2Ref} className={`subtitle ${h2InView ? 'animate-fade' : ''}`}>
-            A Full Stack Developer
-          </h2>
-          <p ref={pRef} className={`intro-text ${pInView ? 'animate-fade' : ''}`}>
-            If you&apos;re working on something cool,{' '}
-            <span className="line-break" aria-hidden="true"><br /></span>
-            reach out and let&apos;s collaborate!
-          </p>
-          <div aria-label="Connect with me on social media">
-            <Socials />
-          </div>
-        </div>
-
-          <div className="image-section">
-            {showMatrix ? (
-              <Image
-                src="/assets/images/responsive/matrix-md.avif"
-                alt="Stephen Montana - 3D rendered portrait of a full stack developer in the matrix."
-                width={400}
-                height={400}
-                priority
-                fetchPriority="high"
-                className={getGlitchClass()}
-                sizes="(max-width: 640px) 340px, (max-width: 1024px) 400px, 510px"
-                onClick={handleImageClick}
-                onTouchStart={handleTouchStart}
-                onTouchEnd={handleTouchEnd}
-                onTouchCancel={handleTouchEnd}
-                style={{ cursor: 'default', userSelect: 'none' }}
-              />
-            ) : (
-              <Image
-                src="/assets/images/responsive/me3d-md.avif"
-                alt="Stephen Montana - 3D rendered portrait of a full stack developer"
-                width={340}
-                height={510}
-                priority
-                fetchPriority="high"
-                className={getGlitchClass()}
-                sizes="(max-width: 640px) 170px, (max-width: 1024px) 340px, 510px"
-                onClick={handleImageClick}
-                onTouchStart={handleTouchStart}
-                onTouchEnd={handleTouchEnd}
-                onTouchCancel={handleTouchEnd}
-                style={{ cursor: 'pointer', userSelect: 'none' }}
-              />
-            )}
+          <div className="info-section">
+            <h1 ref={h1Ref} className={h1InView ? 'animate-slide-spring' : ''}>
+              <span className="greeting">Hi, I&apos;m</span>
+              <span className="name-container" aria-label="Stephen">
+                <StephenSVG />
+              </span>
+            </h1>
+            <h2 ref={h2Ref} className={`subtitle ${h2InView ? 'animate-fade' : ''}`}>
+              A Full Stack Developer
+            </h2>
+            <p ref={pRef} className={`intro-text ${pInView ? 'animate-fade' : ''}`}>
+              If you&apos;re working on something cool,{' '}
+              <span className="line-break" aria-hidden="true"><br /></span>
+              reach out and let&apos;s collaborate!
+            </p>
+            <div aria-label="Connect with me on social media">
+              <Socials />
+            </div>
           </div>
 
-          {/* Reality Mode Toggle */}
-          {showToggle && (
-            <button
-              className="reality-toggle"
-              onClick={toggleReality}
-              aria-label={showMatrix ? "Exit Matrix mode" : "Enter Matrix mode"}
-              title={showMatrix ? "Return to reality" : "Enter the Matrix"}
-            >
-              <span className="pill-icon">
-                <span className={`pill ${showMatrix ? 'blue' : 'red'}`}></span>
-              </span>
-              <span className="toggle-label">
-                {showMatrix ? 'Reality Mode' : 'Matrix Mode'}
-              </span>
-            </button>
-          )}
-    </main>
+            <div className="image-section">
+              {showMatrix ? (
+                <Image
+                  src="/assets/images/responsive/matrix-md.avif"
+                  alt="Stephen Montana - 3D rendered portrait of a full stack developer in the matrix."
+                  width={400}
+                  height={400}
+                  priority
+                  fetchPriority="high"
+                  className={getGlitchClass()}
+                  sizes="(max-width: 640px) 340px, (max-width: 1024px) 400px, 510px"
+                  onClick={handleImageClick}
+                  onTouchStart={handleTouchStart}
+                  onTouchEnd={handleTouchEnd}
+                  onTouchCancel={handleTouchEnd}
+                  style={{ cursor: 'default', userSelect: 'none' }}
+                />
+              ) : (
+                <Image
+                  src="/assets/images/responsive/me3d-md.avif"
+                  alt="Stephen Montana - 3D rendered portrait of a full stack developer"
+                  width={340}
+                  height={510}
+                  priority
+                  fetchPriority="high"
+                  className={getGlitchClass()}
+                  sizes="(max-width: 640px) 170px, (max-width: 1024px) 340px, 510px"
+                  onClick={handleImageClick}
+                  onTouchStart={handleTouchStart}
+                  onTouchEnd={handleTouchEnd}
+                  onTouchCancel={handleTouchEnd}
+                  style={{ cursor: 'pointer', userSelect: 'none' }}
+                />
+              )}
+            </div>
+      </main>
+
+      {/* Reality Mode Toggle - Outside main to prevent flex layout interference */}
+      {showToggle && (
+        <button
+          className="reality-toggle"
+          onClick={toggleReality}
+          aria-label={showMatrix ? "Exit Matrix mode" : "Enter Matrix mode"}
+          title={showMatrix ? "Return to reality" : "Enter the Matrix"}
+        >
+          <span className="pill-icon">
+            <span className={`pill ${showMatrix ? 'blue' : 'red'}`}></span>
+          </span>
+          <span className="toggle-label">
+            {showMatrix ? 'Reality Mode' : 'Matrix Mode'}
+          </span>
+        </button>
+      )}
+    </>
   );
 }

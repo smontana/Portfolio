@@ -394,7 +394,11 @@
   z-index: 1000;
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
-  animation: toggle-slide-in 0.5s ease-out;
+  animation: toggle-fade-in 0.5s ease-out;
+  // Hint browser about transforms to prevent layout shift
+  will-change: opacity;
+  // Ensure button doesn't cause reflow
+  contain: layout;
 
   &:hover {
     transform: translateY(-2px);
@@ -443,14 +447,12 @@
   }
 }
 
-@keyframes toggle-slide-in {
+@keyframes toggle-fade-in {
   from {
     opacity: 0;
-    transform: translateX(100px);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
   }
 }
 
