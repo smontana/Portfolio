@@ -67,13 +67,16 @@
     }
   }
 
-  // Mobile/Touch: Show tooltip on focus/active
+  // Mobile/Touch: Show tooltip on focus only (not active to prevent flicker)
   &:focus::before,
-  &:focus::after,
-  &:active::before,
-  &:active::after {
+  &:focus::after {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
+  }
+
+  // Prevent flicker on iOS by making tooltip stay visible during tap
+  &:focus {
+    -webkit-tap-highlight-color: transparent;
   }
 
   // Keyboard navigation
@@ -90,8 +93,7 @@
     display: block;
   }
 
-  &:focus svg,
-  &:active svg {
+  &:focus svg {
     transform: scale(1.1);
   }
 }
